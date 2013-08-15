@@ -6,7 +6,7 @@ package com.reader.common;
  * 
  */
 
-public interface Marker {
+public interface TextSource {
 
 	/**
 	 * Return text with text processor
