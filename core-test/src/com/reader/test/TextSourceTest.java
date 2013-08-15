@@ -61,6 +61,9 @@ public class TextSourceTest {
 			}
 		});
 
+		assertTrue(end[0]);
+		assertTrue(res.isEmpty());
+
 		TextWithProperties properties = new TextWithProperties();
 		properties.setText("simple");
 
@@ -114,6 +117,9 @@ public class TextSourceTest {
 				end[0] = true;
 			}
 		});
+
+		assertTrue(end[0]);
+		assertTrue(res.isEmpty());
 	}
 
 }
