@@ -6,6 +6,6 @@ package com.reader.common;
  * 
  */
 
-public interface Marker {
+public interface TextProcessor {
 
 }
