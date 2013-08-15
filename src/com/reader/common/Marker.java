@@ -8,4 +8,12 @@ package com.reader.common;
 
 public interface Marker {
 
+	/**
+	 * Return text with text processor
+	 * 
+	 * @param textProcessor
+	 */
+
+	public void process(TextProcessor textProcessor);
+
 }
