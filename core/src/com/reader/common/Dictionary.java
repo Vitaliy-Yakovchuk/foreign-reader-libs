@@ -12,4 +12,6 @@ public interface Dictionary {
 
 	public WordAttributes[] get(String[] world);
 
+	public void update(TextWithProperties properties);
+
 }

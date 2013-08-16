@@ -7,6 +7,8 @@ public interface ColorConstants {
 	public static final String BLUE = "#0000FF";
 
 	public static final String BLACK = "#000000";
+	
+	public static final String YELLOW = "#FFFF00";
 
 	public static final String DEFAULT = BLUE;
 

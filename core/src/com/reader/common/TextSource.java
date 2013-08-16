@@ -16,8 +16,6 @@ public interface TextSource {
 
 	public void process(TextProcessor textProcessor);
 
-	public void update(TextWithProperties properties);
-
 	public Dictionary getDictionary();
 
 }

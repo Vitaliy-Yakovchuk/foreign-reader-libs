@@ -10,7 +10,7 @@ import com.reader.common.ColorConstants;
 import com.reader.common.Dictionary;
 import com.reader.common.TextProcessor;
 import com.reader.common.TextSource;
-import com.reader.common.TextSourceFactory;
+import com.reader.common.ObjectsFactory;
 import com.reader.common.TextWithProperties;
 
 import static org.junit.Assert.*;
@@ -26,7 +26,7 @@ public class TextSourceTest {
 	@Before
 	public void initSimple() {
 		String text = "Hello, this is simple text!";
-		source = TextSourceFactory.createSimpleSource(text);
+		source = ObjectsFactory.createSimpleSource(text);
 
 		end = new boolean[1];
 		res = new ArrayList<String>();
@@ -43,7 +43,7 @@ public class TextSourceTest {
 
 			@Override
 			public void updated(TextWithProperties textProperties) {
-				assertEquals("simple", textProperties.getText());
+				assertEquals(res.remove(0), textProperties.getText());
 				assertTrue(end[0]);
 			}
 
@@ -65,21 +65,20 @@ public class TextSourceTest {
 		assertTrue(res.isEmpty());
 
 		TextWithProperties properties = new TextWithProperties();
-		properties.setText("simple");
+		properties.setText("simple text");
 
-		source.update(properties);
+		res.add("simple");
+		res.add("text");
+		
+		source.getDictionary().update(properties);
+		
+		assertTrue(res.isEmpty());
 	}
 
 	@Test
 	public void testMarker() {
 
-		res = new ArrayList<String>();
-		res.add("hello");
-		res.add("this");
-		res.add("is");
-		res.add("simple text");
-
-		Dictionary dictionary = source.getDictionary();
+	Dictionary dictionary = source.getDictionary();
 
 		dictionary.markColor("this", ColorConstants.WHITE);
 		dictionary.markColor("is", ColorConstants.BLACK);
@@ -102,7 +101,10 @@ public class TextSourceTest {
 				else if ("is".equals(textProperties.getText()))
 					assertEquals(ColorConstants.BLACK,
 							textProperties.getColor());
-				else if ("simple text".equals(textProperties.getText()))
+				else if ("simple".equals(textProperties.getText()))
+					assertEquals(ColorConstants.BLACK,
+							textProperties.getColor());
+				else if ("text".equals(textProperties.getText()))
 					assertEquals(ColorConstants.BLACK,
 							textProperties.getColor());
 				else
