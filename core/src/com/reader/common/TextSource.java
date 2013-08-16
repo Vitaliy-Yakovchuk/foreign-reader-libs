@@ -16,6 +16,22 @@ public interface TextSource {
 
 	public void process(TextProcessor textProcessor);
 
-	public Dictionary getDictionary();
+	/**
+	 * Text in property can be upper case and even with whitespace and/or phrase
+	 * 
+	 * @param text
+	 * @param color
+	 */
+
+	public void update(TextWithProperties properties);
+
+	/**
+	 * Text can be upper case and even with whitespace and/or phrase
+	 * 
+	 * @param text
+	 * @param color
+	 */
+
+	public void markColor(String text, String black);
 
 }

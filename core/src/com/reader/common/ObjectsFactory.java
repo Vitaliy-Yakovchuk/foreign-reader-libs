@@ -17,4 +17,8 @@ public class ObjectsFactory {
 		return memoryDatabase;
 	}
 
+	public static void clear() {
+		memoryDatabase = new MemoryDatabase();
+	}
+
 }
