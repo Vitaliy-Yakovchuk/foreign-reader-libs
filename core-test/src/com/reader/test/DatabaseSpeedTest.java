@@ -1,8 +1,6 @@
 package com.reader.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.junit.After;
 import org.junit.Test;
 
 import com.reader.common.ColorConstants;
@@ -14,13 +12,38 @@ import static org.junit.Assert.*;
 
 public class DatabaseSpeedTest {
 
+	@After
+	public void clear() {
+
+	}
+
+	@Test
+	public void simpleTest() {
+		Database database = ObjectsFactory.getDefaultDatabase();
+		WordAttributes wa1 = new WordAttributes();
+		wa1.setColor("color1");
+		wa1.setStartsWithPhrase(true);
+		WordAttributes wa2 = new WordAttributes();
+		wa2.setColor("color2");
+		wa2.setTransport(true);
+
+		String word1 = "w1";
+		String word2 = "w2";
+
+		database.put(word1, wa1);
+		database.put(word2, wa2);
+
+		assertEquals(wa2, database.get(word2));
+		assertEquals(wa1, database.get(word1));
+	}
+
 	@Test
 	public void testSpeed() {
 		Database database = ObjectsFactory.getDefaultDatabase();
-		List<String> randomWords = new ArrayList<String>();
+		String[] randomWords = new String[100000];
 
 		for (int i = 0; i < 100000; i++) {
-			randomWords.add(String.valueOf(Math.random()));
+			randomWords[i] = String.valueOf(Math.random());
 		}
 
 		String[] phrase1 = new String[3];
@@ -30,35 +53,34 @@ public class DatabaseSpeedTest {
 
 		int off = 2034;
 
-		phrase1[0] = randomWords.get(off + 0);
-		phrase1[1] = randomWords.get(off + 1);
-		phrase1[2] = randomWords.get(off + 2);
+		phrase1[0] = randomWords[off + 0];
+		phrase1[1] = randomWords[off + 1];
+		phrase1[2] = randomWords[off + 2];
 
-		phrase2[0] = randomWords.get(off + 30);
-		phrase2[1] = randomWords.get(off + 31);
-		phrase2[2] = randomWords.get(off + 32);
+		phrase2[0] = randomWords[off + 30];
+		phrase2[1] = randomWords[off + 31];
+		phrase2[2] = randomWords[off + 32];
 
-		phrase11[0] = randomWords.get(off + 0);
-		phrase11[1] = randomWords.get(off + 1);
-		phrase11[2] = randomWords.get(off + 2);
-		phrase11[3] = randomWords.get(off + 3);
+		phrase11[0] = randomWords[off + 0];
+		phrase11[1] = randomWords[off + 1];
+		phrase11[2] = randomWords[off + 2];
+		phrase11[3] = randomWords[off + 3];
 
-		phrase12[0] = randomWords.get(off + 0);
-		phrase12[1] = randomWords.get(off + 1);
-		phrase12[2] = randomWords.get(off + 2);
-		phrase12[3] = randomWords.get(off + 3);
-		phrase12[4] = randomWords.get(off + 4);
-		phrase12[5] = randomWords.get(off + 5);
+		phrase12[0] = randomWords[off + 0];
+		phrase12[1] = randomWords[off + 1];
+		phrase12[2] = randomWords[off + 2];
+		phrase12[3] = randomWords[off + 3];
+		phrase12[4] = randomWords[off + 4];
+		phrase12[5] = randomWords[off + 5];
 
 		long ct = System.currentTimeMillis();
 
 		WordAttributes wa = new WordAttributes();
 		wa.setColor(ColorConstants.WHITE);
 
-		for (String w : randomWords)
-			database.put(w, wa);
-
-		final String w = randomWords.get(off);
+		database.updateWords(randomWords, wa);
+		
+		final String w = randomWords[off];
 
 		wa = database.get(w);
 		wa.setColor(ColorConstants.BLACK);
@@ -116,7 +138,6 @@ public class DatabaseSpeedTest {
 
 		wa = database.get(phrase11);
 
-		
 		assertTrue(wa.isStartsWithPhrase());
 		assertTrue(wa.isTransport());
 
@@ -127,6 +148,6 @@ public class DatabaseSpeedTest {
 		assertFalse(wa.isStartsWithPhrase());
 		assertFalse(wa.isTransport());
 
-		assertTrue(System.currentTimeMillis() - ct < 3000);
+		assertTrue(System.currentTimeMillis() - ct < 5000);
 	}
 }

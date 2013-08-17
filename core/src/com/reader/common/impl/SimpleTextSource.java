@@ -152,4 +152,11 @@ public class SimpleTextSource extends AbstractTextSource {
 		}
 		return sb.toString();
 	}
+
+	@Override
+	public void markColor(String[] words, String color) {
+		WordAttributes attributes = new WordAttributes();
+		attributes.setColor(color);
+		database.updateWords(words, attributes);		
+	}
 }

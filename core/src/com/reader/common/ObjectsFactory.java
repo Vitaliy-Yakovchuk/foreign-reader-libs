@@ -1,11 +1,17 @@
 package com.reader.common;
 
-import com.reader.common.impl.MemoryDatabase;
+import java.io.File;
+
 import com.reader.common.impl.SimpleTextSource;
+import com.reader.mapdb.MapDBDatabase;
 
 public class ObjectsFactory {
 
-	private static MemoryDatabase memoryDatabase = new MemoryDatabase();
+	private static MapDBDatabase database;
+
+	static {
+		database = new MapDBDatabase(new File("/home/zdd/tmp/1"));
+	}
 
 	public static TextSource createSimpleSource(String text) {
 		SimpleTextSource textSource = new SimpleTextSource(text,
@@ -14,11 +20,13 @@ public class ObjectsFactory {
 	}
 
 	public static Database getDefaultDatabase() {
-		return memoryDatabase;
+		clear();
+		return database;
 	}
 
 	public static void clear() {
-		memoryDatabase = new MemoryDatabase();
+		database.closeAndRemove();
+		database = new MapDBDatabase(new File("/home/zdd/tmp/1"));
 	}
 
 }

@@ -32,6 +32,8 @@ public interface TextSource {
 	 * @param color
 	 */
 
-	public void markColor(String text, String black);
+	public void markColor(String text, String color);
+	
+	public void markColor(String[] words, String black);
 
 }

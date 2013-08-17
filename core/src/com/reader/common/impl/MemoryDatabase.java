@@ -1,5 +1,6 @@
 package com.reader.common.impl;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import com.reader.common.AbstractDatabase;
@@ -7,33 +8,63 @@ import com.reader.common.persist.WordAttributes;
 
 public class MemoryDatabase extends AbstractDatabase {
 
-	private HashMap<String, WordAttributes> attributes = new HashMap<String, WordAttributes>();
+	private HashMap<Bytes, Bytes> attributes = new HashMap<Bytes, Bytes>();
 
+	private class Bytes{
+		final byte[] bs;
+		
+		public Bytes(byte[] bs) {
+			this.bs = bs;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + Arrays.hashCode(bs);
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Bytes other = (Bytes) obj;
+			if (!getOuterType().equals(other.getOuterType()))
+				return false;
+			if (!Arrays.equals(bs, other.bs))
+				return false;
+			return true;
+		}
+
+		private MemoryDatabase getOuterType() {
+			return MemoryDatabase.this;
+		}
+	}
+	
 	@Override
-	public void put(String word, WordAttributes wordAttributes) {
-		WordAttributes wordAttributes2 = copy(wordAttributes);
-		attributes.put(word, wordAttributes2);
+	public void putA(String word, WordAttributes wordAttributes) {
+		byte[] bytes = bytes(word);
+		attributes.put(new Bytes(bytes), new Bytes(bytes(wordAttributes)));
 	}
 
-	private WordAttributes copy(WordAttributes wordAttributes) {
-		if (wordAttributes == null)
+	@Override
+	public WordAttributes getA(String word) {
+		byte[] bytes = bytes(word);
+		Bytes bytes2 = attributes.get(new Bytes(bytes));
+		if(bytes2==null)
 			return null;
-		WordAttributes wordAttributes2 = new WordAttributes();
-		wordAttributes2.setColor(wordAttributes.getColor());
-		wordAttributes2.setTransport(wordAttributes.isTransport());
-		wordAttributes2
-				.setStartsWithPhrase(wordAttributes.isStartsWithPhrase());
-		return wordAttributes2;
+		return fromBytes(bytes2.bs);
 	}
 
 	@Override
-	public WordAttributes get(String word) {
-		return copy(attributes.get(word));
-	}
-
-	@Override
-	public void remove(String word) {
-		attributes.remove(word);
+	public void removeA(String word) {
+		attributes.remove(bytes(word));
 	}
 
 }
