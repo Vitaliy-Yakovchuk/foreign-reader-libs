@@ -9,9 +9,7 @@ public class ObjectsFactory {
 
 	private static MapDBDatabase database;
 
-	static {
-		database = new MapDBDatabase(new File("/home/zdd/tmp/1"));
-	}
+	public static File storageFile;
 
 	public static TextSource createSimpleSource(String text) {
 		SimpleTextSource textSource = new SimpleTextSource(text,
@@ -20,13 +18,17 @@ public class ObjectsFactory {
 	}
 
 	public static Database getDefaultDatabase() {
-		clear();
+		if (database == null) {
+			database = new MapDBDatabase(storageFile);
+		}
 		return database;
 	}
 
 	public static void clear() {
+		if (database == null)
+			return;
 		database.closeAndRemove();
-		database = new MapDBDatabase(new File("/home/zdd/tmp/1"));
+		database = new MapDBDatabase(storageFile);
 	}
 
 }

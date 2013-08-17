@@ -1,10 +1,12 @@
 package com.reader.test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.reader.common.ColorConstants;
@@ -23,8 +25,19 @@ public class TextSourceTest {
 
 	private List<String> res;
 
+	@BeforeClass
+	public static void init(){
+		try {
+			ObjectsFactory.storageFile = File.createTempFile("sds", "ff");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Before
 	public void initSimple() {
+		
+		
 		ObjectsFactory.clear();
 		
 		String text = "Hello, this is simple text!";

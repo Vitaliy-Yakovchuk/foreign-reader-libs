@@ -1,6 +1,10 @@
 package com.reader.test;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.After;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.reader.common.ColorConstants;
@@ -11,6 +15,15 @@ import com.reader.common.persist.WordAttributes;
 import static org.junit.Assert.*;
 
 public class DatabaseSpeedTest {
+
+	@BeforeClass
+	public static void init() {
+		try {
+			ObjectsFactory.storageFile = File.createTempFile("ssf", "ff");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@After
 	public void clear() {
@@ -79,7 +92,7 @@ public class DatabaseSpeedTest {
 		wa.setColor(ColorConstants.WHITE);
 
 		database.updateWords(randomWords, wa);
-		
+
 		final String w = randomWords[off];
 
 		wa = database.get(w);
