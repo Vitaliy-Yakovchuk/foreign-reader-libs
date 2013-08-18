@@ -33,37 +33,37 @@ public class SimpleTextSource extends AbstractTextSource {
 		SimpleTextParser parser = new SimpleTextParser() {
 
 			@Override
-			public void processWord(String lowerCaseWord) {
-				WordAttributes attrs = database.get(lowerCaseWord);
+			public void processWord(String word) {
+				WordAttributes attrs = database.get(word.toLowerCase());
 				if (attrs == null) {
 					if (buffer.size() == 0) {
-						defaultTextWithProperties.setText(lowerCaseWord);
+						defaultTextWithProperties.setText(word);
 						defaultTextWithProperties
 								.setColor(ColorConstants.DEFAULT);
 						SimpleTextSource.this.textProcessor
 								.got(defaultTextWithProperties);
 					} else {
 						TextWithProperties textWithProperties = new TextWithProperties();
-						textWithProperties.setText(lowerCaseWord);
+						textWithProperties.setText(word);
 						textWithProperties.setColor(ColorConstants.DEFAULT);
 						buffer.add(textWithProperties);
 						pushBuff();
 					}
 				} else if (attrs.isStartsWithPhrase()) {
 					TextWithProperties textWithProperties = new TextWithProperties();
-					textWithProperties.setText(lowerCaseWord);
+					textWithProperties.setText(word);
 					textWithProperties.setColor(attrs.getColor());
 					buffer.add(textWithProperties);
 					pushBuff();
 				} else {
 					if (buffer.size() == 0) {
-						defaultTextWithProperties.setText(lowerCaseWord);
+						defaultTextWithProperties.setText(word);
 						defaultTextWithProperties.setColor(attrs.getColor());
 						SimpleTextSource.this.textProcessor
 								.got(defaultTextWithProperties);
 					} else {
 						TextWithProperties textWithProperties = new TextWithProperties();
-						textWithProperties.setText(lowerCaseWord);
+						textWithProperties.setText(word);
 						textWithProperties.setColor(attrs.getColor());
 						buffer.add(textWithProperties);
 						pushBuff();
@@ -78,7 +78,7 @@ public class SimpleTextSource extends AbstractTextSource {
 				for (int i = strings.length - 1; i >= 0; --i)
 					strings[i] = buffer.get(i).getText();
 
-				WordAttributes attrs = database.get(strings);
+				WordAttributes attrs = database.get(strings.toString());
 				if (attrs == null)
 					while (buffer.size() > 0)
 						SimpleTextSource.this.textProcessor.got(buffer
@@ -99,11 +99,13 @@ public class SimpleTextSource extends AbstractTextSource {
 	@Override
 	public void update(final TextWithProperties properties) {
 		final List<String> words = new ArrayList<String>();
+		final List<String> wordsA = new ArrayList<String>();
 		SimpleTextParser smallParser = new SimpleTextParser() {
 
 			@Override
-			public void processWord(String lowerCaseWord) {
-				words.add(lowerCaseWord);
+			public void processWord(String word) {
+				words.add(word.toLowerCase());
+				wordsA.add(word);
 			}
 
 		};
@@ -136,7 +138,7 @@ public class SimpleTextSource extends AbstractTextSource {
 
 		TextWithProperties twp = new TextWithProperties();
 		twp.setColor(properties.getColor());
-		twp.setText(add(words));
+		twp.setText(add(wordsA));
 
 		textProcessor.updated(twp);
 	}

@@ -15,7 +15,7 @@ public abstract class SimpleTextParser extends AbstractTextParser {
 			while ((character = reader.read()) != -1) {
 				if (!Character.isUnicodeIdentifierPart(character)) {
 					if (sb.length() > 0) {
-						processWord(sb.toString().toLowerCase());
+						processWord(sb.toString());
 						sb.setLength(0);
 					}
 				} else
@@ -25,10 +25,10 @@ public abstract class SimpleTextParser extends AbstractTextParser {
 			e.printStackTrace();
 		}
 		if (sb.length() > 0) {
-			processWord(sb.toString().toLowerCase());
+			processWord(sb.toString());
 			sb.setLength(0);
 		}
 	}
 
-	public abstract void processWord(String lowerCaseWord);
+	public abstract void processWord(String word);
 }

@@ -45,7 +45,7 @@ public class TextSourceTest {
 		
 		end = new boolean[1];
 		res = new ArrayList<String>();
-		res.add("hello");
+		res.add("Hello");
 		res.add("this");
 		res.add("is");
 		res.add("simple");
@@ -85,7 +85,7 @@ public class TextSourceTest {
 
 		properties.setColor(ColorConstants.RED);
 
-		res.add("simple text");
+		res.add("Simple text");
 
 		source.update(properties);
 
