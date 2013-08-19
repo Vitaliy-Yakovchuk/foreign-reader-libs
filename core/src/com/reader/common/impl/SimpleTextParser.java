@@ -13,7 +13,7 @@ public abstract class SimpleTextParser extends AbstractTextParser {
 		int character;
 		try {
 			while ((character = reader.read()) != -1) {
-				if (!Character.isUnicodeIdentifierPart(character)) {
+				if (!isTextPart(character)) {
 					if (sb.length() > 0) {
 						processWord(sb.toString());
 						sb.setLength(0);
@@ -28,6 +28,14 @@ public abstract class SimpleTextParser extends AbstractTextParser {
 			processWord(sb.toString());
 			sb.setLength(0);
 		}
+	}
+
+	public static boolean isTextPart(char c) {
+		return Character.isUnicodeIdentifierPart(c);
+	}
+
+	public static boolean isTextPart(int c) {
+		return Character.isUnicodeIdentifierPart(c);
 	}
 
 	public abstract void processWord(String word);

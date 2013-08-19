@@ -1,0 +1,17 @@
+<project name="Reader" default="jar" basedir=".">
+	<description>
+		Create jar for all text projects and copy to android lib
+	</description>
+
+	<target name="jar" description="generate the jar file">
+		<jar destfile="../../ForiegnReader/libs/words-processor.jar">
+			<fileset dir="../../foriegn-reader-common/bin" />
+			<fileset dir="../../foriegn-reader-core/bin" />
+			<fileset dir="../../foriegn-reader-MapDB/bin" />
+		</jar>
+	</target>
+
+	<target name="clean" description="clean up">
+		<delete file="../../ForiegnReader/libs/words-processor.jar" />
+	</target>
+</project>
