@@ -78,7 +78,7 @@ public class SimpleTextSource extends AbstractTextSource {
 				for (int i = strings.length - 1; i >= 0; --i)
 					strings[i] = buffer.get(i).getText();
 
-				WordAttributes attrs = database.get(strings.toString());
+				WordAttributes attrs = database.get(strings);
 				if (attrs == null)
 					while (buffer.size() > 0)
 						SimpleTextSource.this.textProcessor.got(buffer
