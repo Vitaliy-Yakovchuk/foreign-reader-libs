@@ -76,7 +76,7 @@ public class SimpleTextSource extends AbstractTextSource {
 					return;
 				String[] strings = new String[buffer.size()];
 				for (int i = strings.length - 1; i >= 0; --i)
-					strings[i] = buffer.get(i).getText();
+					strings[i] = buffer.get(i).getText().toLowerCase();
 
 				WordAttributes attrs = database.get(strings);
 				if (attrs == null)
@@ -99,13 +99,11 @@ public class SimpleTextSource extends AbstractTextSource {
 	@Override
 	public void update(final TextWithProperties properties) {
 		final List<String> words = new ArrayList<String>();
-		final List<String> wordsA = new ArrayList<String>();
 		SimpleTextParser smallParser = new SimpleTextParser() {
 
 			@Override
 			public void processWord(String word) {
 				words.add(word.toLowerCase());
-				wordsA.add(word);
 			}
 
 		};
@@ -138,27 +136,15 @@ public class SimpleTextSource extends AbstractTextSource {
 
 		TextWithProperties twp = new TextWithProperties();
 		twp.setColor(properties.getColor());
-		twp.setText(add(wordsA));
+		twp.setWords(words);
 
 		textProcessor.updated(twp);
-	}
-
-	private String add(List<String> words) {
-		StringBuffer sb = null;
-		for (String w : words) {
-			if (sb == null)
-				sb = new StringBuffer();
-			else
-				sb.append(Database.SPACE);
-			sb.append(w);
-		}
-		return sb.toString();
 	}
 
 	@Override
 	public void markColor(String[] words, String color) {
 		WordAttributes attributes = new WordAttributes();
 		attributes.setColor(color);
-		database.updateWords(words, attributes);		
+		database.updateWords(words, attributes);
 	}
 }

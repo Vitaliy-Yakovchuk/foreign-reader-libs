@@ -58,7 +58,10 @@ public class TextSourceTest {
 
 			@Override
 			public void updated(TextWithProperties textProperties) {
-				assertEquals(res.remove(0), textProperties.getText());
+				res.remove(0);
+				assertEquals(2, textProperties.getWords().size());
+				assertEquals("simple", textProperties.getWords().get(0));
+				assertEquals("text", textProperties.getWords().get(1));
 				textProperties.getColor().equals(ColorConstants.RED);
 				assertTrue(end[0]);
 			}
@@ -184,6 +187,48 @@ public class TextSourceTest {
 					assertEquals(ColorConstants.YELLOW,
 							textProperties.getColor());
 				else if ("text".equals(textProperties.getText()))
+					assertEquals(ColorConstants.YELLOW,
+							textProperties.getColor());
+				else
+					assertEquals(ColorConstants.DEFAULT,
+							textProperties.getColor());
+				assertFalse(end[0]);
+			}
+
+			@Override
+			public void end() {
+				assertTrue(res.isEmpty());
+				end[0] = true;
+			}
+		});
+
+		assertTrue(end[0]);
+		assertTrue(res.isEmpty());
+	}
+
+	
+	@Test
+	public void testMarker3() {
+
+		source.markColor("this", ColorConstants.WHITE);
+		source.markColor("hello", ColorConstants.BLACK);
+		source.markColor("Hello this", ColorConstants.YELLOW);
+
+		source.process(new TextProcessor() {
+
+			@Override
+			public void updated(TextWithProperties textProperties) {
+				assertEquals("simple", textProperties.getText());
+				assertTrue(end[0]);
+			}
+
+			@Override
+			public void got(TextWithProperties textProperties) {
+				assertEquals(res.remove(0), textProperties.getText());
+				if ("Hello".equals(textProperties.getText()))
+					assertEquals(ColorConstants.YELLOW,
+							textProperties.getColor());
+				else if ("this".equals(textProperties.getText()))
 					assertEquals(ColorConstants.YELLOW,
 							textProperties.getColor());
 				else
