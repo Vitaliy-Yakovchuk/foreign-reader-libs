@@ -40,8 +40,8 @@ public class SimpleTextSource extends AbstractTextSource {
 						defaultTextWithProperties.setText(word);
 						defaultTextWithProperties
 								.setColor(ColorConstants.DEFAULT);
-						SimpleTextSource.this.textProcessor
-								.got(defaultTextWithProperties);
+						got(SimpleTextSource.this.textProcessor,
+								defaultTextWithProperties);
 					} else {
 						TextWithProperties textWithProperties = new TextWithProperties();
 						textWithProperties.setText(word);
@@ -59,8 +59,8 @@ public class SimpleTextSource extends AbstractTextSource {
 					if (buffer.size() == 0) {
 						defaultTextWithProperties.setText(word);
 						defaultTextWithProperties.setColor(attrs.getColor());
-						SimpleTextSource.this.textProcessor
-								.got(defaultTextWithProperties);
+						got(SimpleTextSource.this.textProcessor,
+								defaultTextWithProperties);
 					} else {
 						TextWithProperties textWithProperties = new TextWithProperties();
 						textWithProperties.setText(word);
@@ -81,8 +81,8 @@ public class SimpleTextSource extends AbstractTextSource {
 				WordAttributes attrs = database.get(strings);
 				if (attrs == null)
 					while (buffer.size() > 0)
-						SimpleTextSource.this.textProcessor.got(buffer
-								.remove(0));
+						got(SimpleTextSource.this.textProcessor,
+								buffer.remove(0));
 				else if (attrs.isTransport())
 					return;
 				else
@@ -92,8 +92,17 @@ public class SimpleTextSource extends AbstractTextSource {
 		};
 		parser.parse(text.toCharArray());
 		while (buffer.size() > 0)
-			textProcessor.got(buffer.remove(0));
+			got(textProcessor, buffer.remove(0));
 		textProcessor.end();
+	}
+
+	private void got(TextProcessor processor, TextWithProperties textProperties) {
+		for (int i = textProperties.getText().length() - 1; i >= 0; --i)
+			if (Character.isDigit(textProperties.getText().charAt(i))) {
+				textProperties.setColor(ColorConstants.WHITE);
+				break;
+			}
+		processor.got(textProperties);
 	}
 
 	@Override
