@@ -2,7 +2,7 @@ package com.reader.common.impl;
 
 import com.reader.common.AbstractTextParser;
 
-public abstract class SimpleTextParser extends AbstractTextParser {
+public abstract class SimpleTextWithSymbolsParser extends AbstractTextParser {
 
 	@Override
 	public void parse(char[] text) {
@@ -14,7 +14,7 @@ public abstract class SimpleTextParser extends AbstractTextParser {
 		boolean f = true;
 		while (i < l) {
 			character = text[i];
-			if (!isTextPart(character)) {
+			if (Character.isSpaceChar(character)) {
 				if (length > 0) {
 					processWord(text, start, length);
 					length = 0;
@@ -33,14 +33,6 @@ public abstract class SimpleTextParser extends AbstractTextParser {
 		if (length > 0) {
 			processWord(text, start, length);
 		}
-	}
-
-	public static boolean isTextPart(char c) {
-		return Character.isUnicodeIdentifierPart(c);
-	}
-
-	public static boolean isTextPart(int c) {
-		return Character.isUnicodeIdentifierPart(c);
 	}
 
 	public abstract void processWord(char[] text, int start, int length);

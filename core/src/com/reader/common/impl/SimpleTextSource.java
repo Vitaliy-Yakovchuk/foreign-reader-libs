@@ -1,6 +1,5 @@
 package com.reader.common.impl;
 
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,7 +32,8 @@ public class SimpleTextSource extends AbstractTextSource {
 		SimpleTextParser parser = new SimpleTextParser() {
 
 			@Override
-			public void processWord(String word) {
+			public void processWord(char[] text, int start, int length) {
+				String word = new String(text, start, length);
 				WordAttributes attrs = database.get(word.toLowerCase());
 				if (attrs == null) {
 					if (buffer.size() == 0) {
@@ -90,7 +90,7 @@ public class SimpleTextSource extends AbstractTextSource {
 						twp.setColor(attrs.getColor());
 			}
 		};
-		parser.parse(new StringReader(text));
+		parser.parse(text.toCharArray());
 		while (buffer.size() > 0)
 			textProcessor.got(buffer.remove(0));
 		textProcessor.end();
@@ -102,13 +102,13 @@ public class SimpleTextSource extends AbstractTextSource {
 		SimpleTextParser smallParser = new SimpleTextParser() {
 
 			@Override
-			public void processWord(String word) {
-				words.add(word.toLowerCase());
+			public void processWord(char[] t, int start, int l) {
+				words.add(new String(t, start, l).toLowerCase());
 			}
 
 		};
 
-		smallParser.parse(new StringReader(properties.getText()));
+		smallParser.parse(properties.getText().toCharArray());
 
 		if (words.size() == 1) {
 			String word = words.get(0);
