@@ -1,7 +1,6 @@
 package com.reader.mapdb;
 
 import java.util.ArrayList;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentNavigableMap;
@@ -10,20 +9,16 @@ import org.mapdb.DB;
 
 import com.reader.common.AbstractBooksDatabase;
 import com.reader.common.BookMetadata;
-import com.reader.common.pages.Page;
 
 public class MapDBBooksDatabase extends AbstractBooksDatabase {
 
 	private ConcurrentNavigableMap<String, BookMetadata> books;
-
-	private ConcurrentNavigableMap<SectionKey, Page[]> sections;
 
 	private DB db;
 
 	public MapDBBooksDatabase(DB db) {
 		this.db = db;
 		books = db.getTreeMap("books");
-		sections = db.getTreeMap("sections");
 	}
 
 	@Override
@@ -76,18 +71,8 @@ public class MapDBBooksDatabase extends AbstractBooksDatabase {
 	}
 
 	@Override
-	public void storeSection(String fileName, int sectionIndex,
-			boolean landscape, boolean splited, Page[] pages) {
-		SectionKey key = new SectionKey(fileName, sectionIndex, landscape,
-				splited);
-		sections.put(key, pages);
+	public BookMetadata getBook(String fileName) {
+		return books.get(fileName);
 	}
 
-	@Override
-	public Page[] loadSection(String fileName, int sectionIndex,
-			boolean landscape, boolean splited) {
-		SectionKey key = new SectionKey(fileName, sectionIndex, landscape,
-				splited);
-		return sections.get(key);
-	}
 }

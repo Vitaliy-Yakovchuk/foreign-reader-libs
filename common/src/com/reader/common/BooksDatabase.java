@@ -2,8 +2,6 @@ package com.reader.common;
 
 import java.util.List;
 
-import com.reader.common.pages.Page;
-
 public interface BooksDatabase {
 
 	public List<BookMetadata> getBooks();
@@ -12,10 +10,5 @@ public interface BooksDatabase {
 
 	public void removeBook(BookMetadata bookMetadata);
 
-	public void storeSection(String fileName, int sectionIndex,
-			boolean landscape, boolean splited, Page[] section);
-
-	public Page[] loadSection(String fileName, int sectionIndex,
-			boolean landscape, boolean splited);
-
+	public BookMetadata getBook(String fileName);
 }
