@@ -16,4 +16,8 @@ public interface Section {
 
 	void splitOnPages(TextWidth textWidth, int width, int maxLineCount);
 
+	int getCurrentCharacter();
+
+	void setCurrentPageByCharacteNumber(int i);
+
 }

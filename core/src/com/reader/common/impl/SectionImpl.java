@@ -1,7 +1,7 @@
 package com.reader.common.impl;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,7 +10,12 @@ import com.reader.common.impl.SimpleTextWithSymbolsParser;
 import com.reader.common.pages.AbstractSection;
 import com.reader.common.pages.Page;
 
-public class SectionImpl extends AbstractSection {
+public class SectionImpl extends AbstractSection implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5843547669613571263L;
 
 	private final char[] t;
 
@@ -29,6 +34,11 @@ public class SectionImpl extends AbstractSection {
 		}
 		t = new char[builder.length()];
 		builder.getChars(0, t.length, t, 0);
+	}
+
+	public SectionImpl(com.reader.common.book.Section section, char[] text) {
+		this.section = section;
+		t = text;
 	}
 
 	@Override
@@ -154,5 +164,28 @@ public class SectionImpl extends AbstractSection {
 	@Override
 	public void setSection(com.reader.common.book.Section section) {
 		this.section = section;
+	}
+
+	@Override
+	public int getCurrentCharacter() {
+		return getPage().startLines[0];
+	}
+
+	@Override
+	public void setCurrentPageByCharacteNumber(int i) {
+		for (int j = 1; j < pages.size(); j++) {
+			if (pages.get(j).startLines[0] > i) {
+				currentPage = j - 1;
+				break;
+			}
+		}
+	}
+
+	public List<Page> getPages() {
+		return pages;
+	}
+
+	public char[] getT() {
+		return t;
 	}
 }

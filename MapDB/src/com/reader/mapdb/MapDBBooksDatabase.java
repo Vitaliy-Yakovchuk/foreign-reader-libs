@@ -40,33 +40,6 @@ public class MapDBBooksDatabase extends AbstractBooksDatabase {
 	@Override
 	public void removeBook(BookMetadata bookMetadata) {
 		books.remove(bookMetadata.getFileName());
-		int sectionIndex = 0;
-		while (true) {
-			boolean b = true;
-			SectionKey key = new SectionKey(bookMetadata.getFileName(),
-					sectionIndex, true, true);
-			if (books.remove(key) != null)
-				b = false;
-
-			key = new SectionKey(bookMetadata.getFileName(), sectionIndex,
-					true, false);
-			if (books.remove(key) != null)
-				b = false;
-
-			key = new SectionKey(bookMetadata.getFileName(), sectionIndex,
-					false, true);
-			if (books.remove(key) != null)
-				b = false;
-
-			key = new SectionKey(bookMetadata.getFileName(), sectionIndex,
-					false, false);
-			if (books.remove(key) != null)
-				b = false;
-
-			if (b)
-				break;
-			sectionIndex++;
-		}
 		db.commit();
 	}
 

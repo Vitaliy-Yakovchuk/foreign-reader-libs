@@ -16,7 +16,7 @@ public class Page implements Serializable {
 		end = new boolean[maxLineCount];
 	}
 
-	public final char[] text;
+	public transient char[] text;
 
 	public final int[] startLines;
 
