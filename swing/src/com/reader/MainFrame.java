@@ -21,9 +21,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import com.reader.common.book.Book;
-import com.reader.common.book.BookLoader;
 import com.reader.common.book.Section;
 import com.reader.common.book.SectionMetadata;
+import com.reader.common.book.BookLoader;
 
 public class MainFrame extends JFrame {
 

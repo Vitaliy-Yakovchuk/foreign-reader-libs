@@ -2,6 +2,7 @@ package com.reader.common.book;
 
 import java.io.File;
 
+import com.reader.common.book.Book;
 import com.reader.common.book.fb2.FictionBook;
 import com.reader.common.book.txt.TxtBook;
 
