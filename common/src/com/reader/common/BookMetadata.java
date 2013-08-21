@@ -22,6 +22,10 @@ public class BookMetadata implements Serializable, Comparable<BookMetadata> {
 
 	private Date lastOpen;
 
+	private int lastPosition;
+
+	private int lastSection;
+
 	public String getFileName() {
 		return fileName;
 	}
@@ -38,6 +42,11 @@ public class BookMetadata implements Serializable, Comparable<BookMetadata> {
 		this.name = name;
 	}
 
+	/**
+	 * Ready percent
+	 * 
+	 * @return
+	 */
 	public float getReady() {
 		return ready;
 	}
@@ -75,4 +84,24 @@ public class BookMetadata implements Serializable, Comparable<BookMetadata> {
 		return o.lastOpen.compareTo(lastOpen);
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
+
+	public int getLastPosition() {
+		return lastPosition;
+	}
+
+	public void setLastPosition(int lastPosition) {
+		this.lastPosition = lastPosition;
+	}
+
+	public int getLastSection() {
+		return lastSection;
+	}
+
+	public void setLastSection(int lastSection) {
+		this.lastSection = lastSection;
+	}
 }

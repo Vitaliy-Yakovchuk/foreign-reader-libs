@@ -3,11 +3,14 @@ package com.reader.common;
 import java.io.File;
 
 import com.reader.common.impl.SimpleTextSource;
+import com.reader.mapdb.MapDBBooksDatabase;
 import com.reader.mapdb.MapDBDatabase;
 
 public class ObjectsFactory {
 
 	private static MapDBDatabase database;
+
+	private static MapDBBooksDatabase booksDatabase;
 
 	public static File storageFile;
 
@@ -29,6 +32,14 @@ public class ObjectsFactory {
 			return;
 		database.closeAndRemove();
 		database = new MapDBDatabase(storageFile);
+	}
+
+	public static BooksDatabase getDefaultBooksDatabase() {
+		if (booksDatabase == null) {
+			getDefaultDatabase();
+			booksDatabase = new MapDBBooksDatabase(database.getDB());
+		}
+		return booksDatabase;
 	}
 
 }
