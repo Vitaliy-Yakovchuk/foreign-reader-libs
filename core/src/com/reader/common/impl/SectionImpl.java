@@ -106,6 +106,8 @@ public class SectionImpl extends AbstractSection implements Serializable {
 					if (pIndex >= p.length()) {
 						res = true;
 						p = paragraphs.next();
+						if(p.length()==0)
+							break;
 						pIndex = 0;
 						while (p.charAt(pIndex) != txt[start]) {
 							pIndex++;
