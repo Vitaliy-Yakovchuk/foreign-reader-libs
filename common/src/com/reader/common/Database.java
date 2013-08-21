@@ -1,5 +1,7 @@
 package com.reader.common;
 
+import java.util.List;
+
 import com.reader.common.persist.WordAttributes;
 
 /**
@@ -12,7 +14,7 @@ import com.reader.common.persist.WordAttributes;
 public interface Database {
 
 	public static final char SPACE = ' ';
-	
+
 	public void put(String word, WordAttributes wordAttributes);
 
 	public WordAttributes get(String word);
@@ -26,5 +28,9 @@ public interface Database {
 	public void remove(String[] frase);
 
 	public void updateWords(String[] words, WordAttributes attributes);
+
+	public List<Word> loadWords(String color);
+	
+	public Word toWord(String word);
 
 }

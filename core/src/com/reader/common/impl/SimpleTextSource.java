@@ -9,6 +9,7 @@ import com.reader.common.ColorConstants;
 import com.reader.common.Database;
 import com.reader.common.TextProcessor;
 import com.reader.common.TextWithProperties;
+import com.reader.common.Word;
 import com.reader.common.persist.WordAttributes;
 
 public class SimpleTextSource extends AbstractTextSource {
@@ -155,5 +156,10 @@ public class SimpleTextSource extends AbstractTextSource {
 		WordAttributes attributes = new WordAttributes();
 		attributes.setColor(color);
 		database.updateWords(words, attributes);
+	}
+
+	@Override
+	public List<Word> getKnownWords(String color) {
+		return database.loadWords(color);
 	}
 }

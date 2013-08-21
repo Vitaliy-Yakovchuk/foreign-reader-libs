@@ -14,6 +14,7 @@ import com.reader.common.TextProcessor;
 import com.reader.common.TextSource;
 import com.reader.common.ObjectsFactory;
 import com.reader.common.TextWithProperties;
+import com.reader.common.Word;
 
 import static org.junit.Assert.*;
 
@@ -26,23 +27,22 @@ public class TextSourceTest {
 	private List<String> res;
 
 	@BeforeClass
-	public static void init(){
+	public static void init() {
 		try {
 			ObjectsFactory.storageFile = File.createTempFile("sds", "ff");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Before
 	public void initSimple() {
-		
-		
+
 		ObjectsFactory.clear();
-		
+
 		String text = "Hello, this is simple text!";
 		source = ObjectsFactory.createSimpleSource(text);
-		
+
 		end = new boolean[1];
 		res = new ArrayList<String>();
 		res.add("Hello");
@@ -115,7 +115,34 @@ public class TextSourceTest {
 		source.markColor("is", ColorConstants.BLACK);
 		source.markColor("simple", ColorConstants.YELLOW);
 		source.markColor("text", ColorConstants.YELLOW);
+		
+		List<Word> words = source.getKnownWords(ColorConstants.YELLOW);
+		assertEquals(2, words.size());
+		
 		source.markColor("simple text", ColorConstants.BLACK);
+		
+		words = source.getKnownWords(ColorConstants.WHITE);
+		assertEquals(1, words.size());
+		assertEquals("this", words.get(0).getText());
+		assertEquals(ColorConstants.WHITE, words.get(0).getColor());
+
+		words = source.getKnownWords(ColorConstants.BLACK);
+		assertEquals(2, words.size());
+		assertTrue("is".equals(words.get(0).getText())
+				|| "is".equals(words.get(1).getText()));
+		assertTrue("simple text".equals(words.get(0).getText())
+				|| "simple text".equals(words.get(1).getText()));
+		assertEquals(ColorConstants.BLACK, words.get(0).getColor());
+		assertEquals(ColorConstants.BLACK, words.get(1).getColor());
+
+		words = source.getKnownWords(ColorConstants.YELLOW);
+		assertEquals(2, words.size());
+		assertTrue("simple".equals(words.get(0).getText())
+				|| "simple".equals(words.get(1).getText()));
+		assertTrue("text".equals(words.get(0).getText())
+				|| "text".equals(words.get(1).getText()));
+		assertEquals(ColorConstants.YELLOW, words.get(0).getColor());
+		assertEquals(ColorConstants.YELLOW, words.get(1).getColor());
 
 		source.process(new TextProcessor() {
 
@@ -155,8 +182,9 @@ public class TextSourceTest {
 
 		assertTrue(end[0]);
 		assertTrue(res.isEmpty());
+
 	}
-	
+
 	@Test
 	public void testMarker2() {
 
@@ -206,7 +234,6 @@ public class TextSourceTest {
 		assertTrue(res.isEmpty());
 	}
 
-	
 	@Test
 	public void testMarker3() {
 

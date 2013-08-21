@@ -2,17 +2,19 @@ package com.reader.common.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import com.reader.common.AbstractDatabase;
+import com.reader.common.Word;
 import com.reader.common.persist.WordAttributes;
 
 public class MemoryDatabase extends AbstractDatabase {
 
 	private HashMap<Bytes, Bytes> attributes = new HashMap<Bytes, Bytes>();
 
-	private class Bytes{
+	private class Bytes {
 		final byte[] bs;
-		
+
 		public Bytes(byte[] bs) {
 			this.bs = bs;
 		}
@@ -46,7 +48,7 @@ public class MemoryDatabase extends AbstractDatabase {
 			return MemoryDatabase.this;
 		}
 	}
-	
+
 	@Override
 	public void putA(String word, WordAttributes wordAttributes) {
 		byte[] bytes = bytes(word);
@@ -57,7 +59,7 @@ public class MemoryDatabase extends AbstractDatabase {
 	public WordAttributes getA(String word) {
 		byte[] bytes = bytes(word);
 		Bytes bytes2 = attributes.get(new Bytes(bytes));
-		if(bytes2==null)
+		if (bytes2 == null)
 			return null;
 		return fromBytes(bytes2.bs);
 	}
@@ -65,6 +67,16 @@ public class MemoryDatabase extends AbstractDatabase {
 	@Override
 	public void removeA(String word) {
 		attributes.remove(bytes(word));
+	}
+
+	@Override
+	public List<Word> loadWords(String color) {
+		throw new RuntimeException("Method loadWords is not supperted");
+	}
+
+	@Override
+	public Word toWord(String word) {
+		throw new RuntimeException("Method loadWords is not supperted");
 	}
 
 }

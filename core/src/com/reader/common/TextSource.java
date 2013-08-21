@@ -1,5 +1,7 @@
 package com.reader.common;
 
+import java.util.List;
+
 /**
  * 
  * @author vitaliy.yakovchuk
@@ -33,7 +35,9 @@ public interface TextSource {
 	 */
 
 	public void markColor(String text, String color);
-	
+
 	public void markColor(String[] words, String black);
+
+	public List<Word> getKnownWords(String color);
 
 }
