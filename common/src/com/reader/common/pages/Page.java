@@ -1,6 +1,13 @@
 package com.reader.common.pages;
 
-public class Page {
+import java.io.Serializable;
+
+public class Page implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7445349484170945159L;
 
 	public Page(char[] text, int maxLineCount) {
 		this.text = text;

@@ -1,10 +1,12 @@
 package com.reader.common.impl;
 
 import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.List;
 
 import com.reader.common.TextWidth;
+import com.reader.common.impl.SimpleTextWithSymbolsParser;
 import com.reader.common.pages.AbstractSection;
 import com.reader.common.pages.Page;
 
