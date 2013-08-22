@@ -23,8 +23,11 @@ public class SectionKey implements Serializable, Comparable<SectionKey> {
 
 	private final int height;
 
+	private final String fontName;
+
 	public SectionKey(String fileName, int index, boolean landscape,
-			boolean splited, int fontSize, int width, int height) {
+			boolean splited, String fontName, int fontSize, int width,
+			int height) {
 		this.index = index;
 		this.fileName = fileName;
 		this.landscape = landscape;
@@ -32,6 +35,7 @@ public class SectionKey implements Serializable, Comparable<SectionKey> {
 		this.fontSize = fontSize;
 		this.width = width;
 		this.height = height;
+		this.fontName = fontName;
 	}
 
 	public String getFileName() {
@@ -62,12 +66,18 @@ public class SectionKey implements Serializable, Comparable<SectionKey> {
 		return height;
 	}
 
+	public String getFontName() {
+		return fontName;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
 				+ ((fileName == null) ? 0 : fileName.hashCode());
+		result = prime * result
+				+ ((fontName == null) ? 0 : fontName.hashCode());
 		result = prime * result + fontSize;
 		result = prime * result + height;
 		result = prime * result + index;
@@ -91,6 +101,12 @@ public class SectionKey implements Serializable, Comparable<SectionKey> {
 				return false;
 		} else if (!fileName.equals(other.fileName))
 			return false;
+		if (fontName == null) {
+			if (other.fontName != null)
+				return false;
+		} else if (!fontName.equals(other.fontName))
+			return false;
+
 		if (fontSize != other.fontSize)
 			return false;
 		if (height != other.height)
@@ -111,6 +127,10 @@ public class SectionKey implements Serializable, Comparable<SectionKey> {
 		int i;
 
 		i = fileName.compareTo(o.fileName);
+		if (i != 0)
+			return i;
+
+		i = fontName.compareTo(o.fontName);
 		if (i != 0)
 			return i;
 
