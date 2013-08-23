@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="120"
+   height="120"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   inkscape:export-filename="/home/zdd/foriegn-reader/workspace/ForeignReader/res/drawable-xxhdpi/ic_launcher.png"
+   inkscape:export-xdpi="108"
+   inkscape:export-ydpi="108"
+   sodipodi:docname="Новий документ 1">
+  <defs
+     id="defs4">
+    <g
+       id="Pentagram">
+      <g
+         transform="translate(0,-0.324925)"
+         id="Arm">
+        <path
+           id="path2997"
+           d="M 0,0 L 0,0.5 L 1,0 z" />
+        <path
+           id="path2999"
+           transform="rotate(-36,1,0)"
+           d="M 0,0 L 0,-0.5 L 1,0 z" />
+      </g>
+      <use
+         id="use3001"
+         transform="scale(-1,1)"
+         xlink:href="#Arm" />
+      <use
+         id="use3003"
+         transform="rotate(72,0,0)"
+         xlink:href="#Arm" />
+      <use
+         id="use3005"
+         transform="rotate(-72,0,0)"
+         xlink:href="#Arm" />
+      <use
+         id="use3007"
+         transform="rotate(-72,0,0) scale(-1,1)"
+         xlink:href="#Arm" />
+    </g>
+    <clipPath
+       id="Diagonals">
+      <path
+         id="path2993"
+         d="M 0,0 L 300,150 L 0,150 z M 300,0 L 600,0 L 300,150 z M 300,150 L 600,150 L 600,300 z M 300,150 L 300,300 L 0,300 z" />
+    </clipPath>
+    <clipPath
+       id="Canton">
+      <path
+         id="path2990"
+         d="M 0,0 L 600,0 L 600,300 L 0,300 z" />
+    </clipPath>
+    <polygon
+       transform="scale(0.0000019467600073)"
+       fill="#ffde00"
+       points="0,-513674 301930,415571 -488533,-158734 488533,-158734 -301930,415571"
+       id="s" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="-136.28665"
+     inkscape:cy="97.352401"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1680"
+     inkscape:window-height="991"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-932.36218)">
+    <g
+       id="g3143"
+       transform="matrix(1.1362383,0,0,1.2274783,-4.758285,-279.32414)">
+      <g
+         transform="matrix(0.08082827,0,0,0.08111712,8.7116221,992.41444)"
+         id="g3058">
+        <rect
+           style="fill:#00247d"
+           x="0"
+           y="0"
+           width="1200"
+           height="600"
+           id="rect3009" />
+        <g
+           id="Flag_of_the_United_Kingdom">
+          <path
+             style="stroke:#ffffff;stroke-width:60"
+             inkscape:connector-curvature="0"
+             id="Saint_Andrews_Cross"
+             d="M 0,0 600,300 M 0,300 600,0"
+             clip-path="url(#Canton)" />
+          <path
+             style="stroke:#cc142b;stroke-width:40"
+             inkscape:connector-curvature="0"
+             id="Saint_Patricks_Cross"
+             d="M 0,0 600,300 M 0,300 600,0"
+             clip-path="url(#Diagonals)" />
+          <g
+             id="Saint_Georges_Cross">
+            <path
+               style="stroke:#ffffff;stroke-width:100"
+               inkscape:connector-curvature="0"
+               d="m 300,0 0,300 M 0,150 l 600,0"
+               clip-path="url(#Canton)"
+               id="path3015" />
+            <path
+               style="stroke:#cc142b;stroke-width:60"
+               inkscape:connector-curvature="0"
+               d="m 300,0 0,300 M 0,150 l 600,0"
+               clip-path="url(#Canton)"
+               id="path3017" />
+          </g>
+        </g>
+        <g
+           id="Southern_Cross">
+          <g
+             id="Gamma_Crucis">
+            <use
+               height="1"
+               width="1"
+               y="0"
+               x="0"
+               style="fill:#ffffff"
+               xlink:href="#Pentagram"
+               transform="matrix(45.4,0,0,45.4,900,120)"
+               id="use3021" />
+            <use
+               height="1"
+               width="1"
+               y="0"
+               x="0"
+               style="fill:#cc142b"
+               xlink:href="#Pentagram"
+               transform="matrix(30,0,0,30,900,120)"
+               id="use3023" />
+          </g>
+          <g
+             transform="matrix(0.1391731,0.99026807,-0.99026807,0.1391731,1012.4085,-684.64281)"
+             id="g3025">
+            <g
+               id="Delta_Crucis">
+              <use
+                 height="1"
+                 width="1"
+                 y="0"
+                 x="0"
+                 style="fill:#ffffff"
+                 xlink:href="#Pentagram"
+                 transform="matrix(5.6225933,-40.00683,40.00683,5.6225933,900,120)"
+                 id="use3028" />
+              <use
+                 height="1"
+                 width="1"
+                 y="0"
+                 x="0"
+                 style="fill:#cc142b"
+                 xlink:href="#Pentagram"
+                 transform="matrix(3.4793275,-24.756702,24.756702,3.4793275,900,120)"
+                 id="use3030" />
+            </g>
+            <g
+               id="Beta_Crucis">
+              <use
+                 height="1"
+                 width="1"
+                 y="0"
+                 x="0"
+                 style="fill:#ffffff"
+                 xlink:href="#Pentagram"
+                 transform="matrix(6.3184588,-44.95817,44.95817,6.3184588,900,380)"
+                 id="use3033" />
+              <use
+                 height="1"
+                 width="1"
+                 y="0"
+                 x="0"
+                 style="fill:#cc142b"
+                 xlink:href="#Pentagram"
+                 transform="matrix(4.175193,-29.708042,29.708042,4.175193,900,380)"
+                 id="use3035" />
+            </g>
+          </g>
+          <g
+             id="Alpha_Crucis">
+            <use
+               height="1"
+               width="1"
+               y="0"
+               x="0"
+               style="fill:#ffffff"
+               xlink:href="#Pentagram"
+               transform="matrix(50.4,0,0,50.4,900,480)"
+               id="use3038" />
+            <use
+               height="1"
+               width="1"
+               y="0"
+               x="0"
+               style="fill:#cc142b"
+               xlink:href="#Pentagram"
+               transform="matrix(35,0,0,35,900,480)"
+               id="use3040" />
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g3129"
+       transform="matrix(0.81478928,0,0,0.94537458,118.19933,-25.820934)">
+      <g
+         transform="matrix(0.04981456,0,0,0.04086271,-58.894037,1080.0925)"
+         id="g3125">
+        <rect
+           style="fill:#005bbb"
+           y="0"
+           x="0"
+           width="1200"
+           height="800"
+           id="rect3115" />
+        <rect
+           style="fill:#ffd500"
+           x="0"
+           width="1200"
+           height="400"
+           y="400"
+           id="rect3117" />
+      </g>
+    </g>
+    <g
+       id="g3362"
+       transform="matrix(7.9761901,0,0,6.9940472,25.000002,1009.8621)">
+      <rect
+         id="rect3350"
+         height="3"
+         width="9"
+         x="0"
+         y="0"
+         style="fill:#ffffff" />
+      <rect
+         id="rect3352"
+         height="3"
+         width="9"
+         y="3"
+         x="0"
+         style="fill:#d52b1e" />
+      <rect
+         id="rect3354"
+         height="2"
+         width="9"
+         y="2"
+         x="0"
+         style="fill:#0039a6" />
+    </g>
+    <g
+       id="g3134"
+       transform="matrix(1.4009406,0,0,1.2677071,-8.2599799,-225.29663)">
+      <g
+         transform="matrix(1.8112174,0,0,1.6008965,15.850774,959.6448)"
+         id="g3105">
+        <rect
+           style="fill:#de2910"
+           x="-5"
+           y="-5"
+           width="30"
+           height="20"
+           id="rect3085" />
+        <use
+           height="1"
+           width="1"
+           y="0"
+           x="0"
+           xlink:href="#s"
+           transform="scale(3,3)"
+           id="use3090" />
+        <use
+           height="1"
+           width="1"
+           y="0"
+           x="0"
+           xlink:href="#s"
+           transform="matrix(-0.51449575,-0.85749293,0.85749293,-0.51449575,5,-3)"
+           id="use3092" />
+        <use
+           height="1"
+           width="1"
+           y="0"
+           x="0"
+           xlink:href="#s"
+           transform="matrix(-0.14142135,-0.98994949,0.98994949,-0.14142135,7,-1)"
+           id="use3094" />
+        <use
+           height="1"
+           width="1"
+           y="0"
+           x="0"
+           xlink:href="#s"
+           transform="matrix(0.27472113,-0.96152395,0.96152395,0.27472113,7,2)"
+           id="use3096" />
+        <use
+           height="1"
+           width="1"
+           y="0"
+           x="0"
+           xlink:href="#s"
+           transform="matrix(0.62469505,-0.78086881,0.78086881,0.62469505,5,4)"
+           id="use3098" />
+      </g>
+    </g>
+  </g>
+</svg>
