@@ -162,4 +162,59 @@ public class SimpleTextSource extends AbstractTextSource {
 	public List<Word> getKnownWords(String color) {
 		return database.loadWords(color);
 	}
+
+	@Override
+	public void markWord(String text) {
+		final List<String> words = new ArrayList<String>();
+		SimpleTextParser smallParser = new SimpleTextParser() {
+
+			@Override
+			public void processWord(char[] t, int start, int l) {
+				words.add(new String(t, start, l).toLowerCase());
+			}
+
+		};
+
+		smallParser.parse(text.toCharArray());
+		String color;
+
+		if (words.size() == 1) {
+			String word = words.get(0);
+			WordAttributes wordAttributes = database.get(word);
+			if (wordAttributes == null) {
+				wordAttributes = new WordAttributes();
+				wordAttributes.setColor(ColorConstants.YELLOW);
+			} else if (wordAttributes.getColor().equals(ColorConstants.WHITE)
+					|| wordAttributes.getColor().equals(ColorConstants.BLUE))
+				wordAttributes.setColor(ColorConstants.YELLOW);
+			else
+				wordAttributes.setColor(ColorConstants.WHITE);
+			color = wordAttributes.getColor();
+			database.put(word, wordAttributes);
+		} else if (words.size() > 1) {
+			String[] ss = words.toArray(new String[words.size()]);
+			WordAttributes wa = database.get(ss);
+			if (wa == null) {
+				wa = new WordAttributes();
+				wa.setColor(ColorConstants.YELLOW);
+			} else if (wa != null && !wa.isTransport()
+					&& wa.getColor().equals(ColorConstants.YELLOW))
+				wa.setColor(ColorConstants.WHITE);
+			else
+				wa.setColor(ColorConstants.YELLOW);
+			database.put(ss, wa);
+			color = wa.getColor();
+		} else
+			return;
+
+		if (textProcessor == null)
+			return;
+
+		TextWithProperties twp = new TextWithProperties();
+		twp.setColor(color);
+		twp.setWords(words);
+
+		textProcessor.updated(twp);
+
+	}
 }

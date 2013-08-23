@@ -36,7 +36,9 @@ public interface TextSource {
 
 	public void markColor(String text, String color);
 
-	public void markColor(String[] words, String black);
+	public void markWord(String text);
+
+	public void markColor(String[] words, String color);
 
 	public List<Word> getKnownWords(String color);
 

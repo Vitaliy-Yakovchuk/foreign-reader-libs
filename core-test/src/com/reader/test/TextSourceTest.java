@@ -115,12 +115,12 @@ public class TextSourceTest {
 		source.markColor("is", ColorConstants.BLACK);
 		source.markColor("simple", ColorConstants.YELLOW);
 		source.markColor("text", ColorConstants.YELLOW);
-		
+
 		List<Word> words = source.getKnownWords(ColorConstants.YELLOW);
 		assertEquals(2, words.size());
-		
+
 		source.markColor("simple text", ColorConstants.BLACK);
-		
+
 		words = source.getKnownWords(ColorConstants.WHITE);
 		assertEquals(1, words.size());
 		assertEquals("this", words.get(0).getText());
@@ -273,6 +273,102 @@ public class TextSourceTest {
 
 		assertTrue(end[0]);
 		assertTrue(res.isEmpty());
+	}
+
+	@Test
+	public void testMarker4() {
+		source.process(new TextProcessor() {
+
+			@Override
+			public void updated(TextWithProperties textProperties) {
+			}
+
+			@Override
+			public void got(TextWithProperties textProperties) {
+				if ("this".equals(textProperties.getText()))
+					assertEquals(ColorConstants.BLUE, textProperties.getColor());
+				assertFalse(end[0]);
+			}
+
+			@Override
+			public void end() {
+				end[0] = true;
+			}
+		});
+
+		assertTrue(end[0]);
+
+		end[0] = false;
+
+		source.markWord("this");
+
+		source.process(new TextProcessor() {
+
+			@Override
+			public void updated(TextWithProperties textProperties) {
+			}
+
+			@Override
+			public void got(TextWithProperties textProperties) {
+				if ("this".equals(textProperties.getText()))
+					assertEquals(ColorConstants.YELLOW,
+							textProperties.getColor());
+				assertFalse(end[0]);
+			}
+
+			@Override
+			public void end() {
+				end[0] = true;
+			}
+		});
+
+		source.markWord("this");
+
+		end[0] = false;
+
+		source.process(new TextProcessor() {
+
+			@Override
+			public void updated(TextWithProperties textProperties) {
+			}
+
+			@Override
+			public void got(TextWithProperties textProperties) {
+				if ("this".equals(textProperties.getText()))
+					assertEquals(ColorConstants.WHITE,
+							textProperties.getColor());
+				assertFalse(end[0]);
+			}
+
+			@Override
+			public void end() {
+				end[0] = true;
+			}
+		});
+
+		source.markWord("this");
+		end[0] = false;
+
+		source.process(new TextProcessor() {
+
+			@Override
+			public void updated(TextWithProperties textProperties) {
+			}
+
+			@Override
+			public void got(TextWithProperties textProperties) {
+				if ("this".equals(textProperties.getText()))
+					assertEquals(ColorConstants.YELLOW,
+							textProperties.getColor());
+				assertFalse(end[0]);
+			}
+
+			@Override
+			public void end() {
+				end[0] = true;
+			}
+		});
+
 	}
 
 }
