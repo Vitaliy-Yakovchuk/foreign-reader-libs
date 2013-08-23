@@ -12,6 +12,7 @@ import org.mapdb.DB;
 import org.mapdb.DBMaker;
 
 import com.reader.common.AbstractDatabase;
+import com.reader.common.ColorConstants;
 import com.reader.common.Word;
 import com.reader.common.persist.WordAttributes;
 
@@ -33,7 +34,11 @@ public class MapDBDatabase extends AbstractDatabase {
 	@Override
 	public void putA(String word, WordAttributes wordAttributes) {
 		wordsMap.put(word, bytes(wordAttributes));
-		wordsDated.put(word, new Date());
+		if (wordAttributes.getColor().equals(ColorConstants.WHITE)) {
+			WordAttributes wa = getA(word);
+			if (wa != null && wa.getColor().equals(ColorConstants.BLUE))
+				wordsDated.put(word, new Date());
+		}
 	}
 
 	@Override
