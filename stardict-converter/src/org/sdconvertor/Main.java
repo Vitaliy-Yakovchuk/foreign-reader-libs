@@ -31,6 +31,27 @@ public class Main {
 
 		DictionaryManager dictManager = new DictionaryManager() {
 			public void addBatch(String word, String meening) {
+				StringBuilder sb = new StringBuilder();
+				boolean f = true;
+				boolean t = false;
+				for (int i = 0; i < meening.length(); i++) {
+					if (meening.charAt(i) == '\n') {
+						if (!t) {
+							t = true;
+							if (f) {
+								sb.append(": ");
+								f = false;
+							} else
+								sb.append("; ");
+						}
+					} else {
+						sb.append(meening.charAt(i));
+						t = false;
+					}
+				}
+				meening = sb.toString().trim();
+				if (meening.endsWith(";"))
+					meening = meening.substring(0, meening.length() - 1);
 				meenings.put(word, meening);
 			};
 		};
