@@ -14,7 +14,7 @@ public abstract class SimpleTextParser extends AbstractTextParser {
 		boolean f = true;
 		while (i < l) {
 			character = text[i];
-			if (!isTextPart(character)) {
+			if (!isTextPart(character) || length > MAX_WORD_LENGTH) {
 				if (length > 0) {
 					processWord(text, start, length);
 					length = 0;
@@ -36,6 +36,8 @@ public abstract class SimpleTextParser extends AbstractTextParser {
 	}
 
 	public static boolean isTextPart(char c) {
+		if (c == '\'')
+			return true;
 		return Character.isUnicodeIdentifierPart(c);
 	}
 

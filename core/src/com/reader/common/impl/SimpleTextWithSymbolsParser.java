@@ -14,7 +14,7 @@ public abstract class SimpleTextWithSymbolsParser extends AbstractTextParser {
 		boolean f = true;
 		while (i < l) {
 			character = text[i];
-			if (Character.isSpaceChar(character)) {
+			if (Character.isSpaceChar(character) || length > MAX_WORD_LENGTH) {
 				if (length > 0) {
 					processWord(text, start, length);
 					length = 0;
