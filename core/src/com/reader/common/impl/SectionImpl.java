@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.reader.common.TextWidth;
+import com.reader.common.book.Section;
 import com.reader.common.impl.SimpleTextWithSymbolsParser;
 import com.reader.common.pages.AbstractSection;
 import com.reader.common.pages.Page;
@@ -106,7 +107,7 @@ public class SectionImpl extends AbstractSection implements Serializable {
 					if (pIndex >= p.length()) {
 						res = true;
 						p = paragraphs.next();
-						if(p.length()==0)
+						if (p.length() == 0)
 							break;
 						pIndex = 0;
 						while (p.charAt(pIndex) != txt[start]) {
@@ -189,5 +190,10 @@ public class SectionImpl extends AbstractSection implements Serializable {
 
 	public char[] getT() {
 		return t;
+	}
+
+	@Override
+	public Section getSection() {
+		return section;
 	}
 }

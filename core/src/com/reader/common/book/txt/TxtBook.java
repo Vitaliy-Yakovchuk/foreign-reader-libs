@@ -57,6 +57,8 @@ public class TxtBook extends AbstractBook {
 
 		section.getParagraphs().add(file.getName());
 
+		section.setTitle(file.getName());
+
 		StringBuilder sb = new StringBuilder();
 
 		while ((ch = reader.read()) > 0) {

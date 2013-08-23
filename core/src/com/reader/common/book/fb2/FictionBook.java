@@ -158,8 +158,9 @@ public class FictionBook extends AbstractBook {
 														title.append(segment);
 													}
 												}
-												section.getParagraphs().add(
-														title.toString());
+												String t = title.toString();
+												section.setTitle(t);
+												section.getParagraphs().add(t);
 											} else if (tag.getName()
 													.equals("p")) {
 
@@ -186,7 +187,9 @@ public class FictionBook extends AbstractBook {
 												section.getParagraphs().add(
 														p.toString());
 
-											}
+											} else if (tag.getName().equals(
+													"section"))
+												break;
 										} else if (segment instanceof EndTag) {
 											if (((Tag) segment).getName()
 													.equals("section"))

@@ -19,5 +19,7 @@ public interface Section {
 	int getCurrentCharacter();
 
 	void setCurrentPageByCharacteNumber(int i);
+	
+	com.reader.common.book.Section getSection();
 
 }
