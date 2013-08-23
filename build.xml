@@ -4,7 +4,7 @@
 	</description>
 
 	<target name="jar" description="generate the jar file">
-		<jar destfile="../../foreignreader/libs/words-processor.jar">
+		<jar destfile="../../ForeignReader/libs/words-processor.jar">
 			<fileset dir="../../foriegn-reader-common/bin" />
 			<fileset dir="../../foriegn-reader-core/bin" />
 			<fileset dir="../../foriegn-reader-MapDB/bin" />
