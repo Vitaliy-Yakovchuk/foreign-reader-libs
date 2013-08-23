@@ -24,20 +24,24 @@ public class MapDBDatabase extends AbstractDatabase {
 
 	private ConcurrentNavigableMap<String, Date> wordsDated;
 
+	private ConcurrentNavigableMap<String, Date> wordsKnowDated;
+
 	public MapDBDatabase(File dbFile) {
 		this.file = dbFile;
 		db = DBMaker.newFileDB(dbFile).make();
 		wordsMap = db.getTreeMap("words");
 		wordsDated = db.getTreeMap("dates");
+		wordsKnowDated = db.getTreeMap("know_dates");
 	}
 
 	@Override
 	public void putA(String word, WordAttributes wordAttributes) {
 		wordsMap.put(word, bytes(wordAttributes));
+		wordsDated.put(word, new Date());
 		if (wordAttributes.getColor().equals(ColorConstants.WHITE)) {
 			WordAttributes wa = getA(word);
 			if (wa != null && wa.getColor().equals(ColorConstants.BLUE))
-				wordsDated.put(word, new Date());
+				wordsKnowDated.put(word, new Date());
 		}
 	}
 
