@@ -4,7 +4,7 @@
 	</description>
 
 	<target name="jar" description="generate the jar file">
-		<jar destfile="../../ForiegnReader/libs/words-processor.jar">
+		<jar destfile="../../foreignreader/libs/words-processor.jar">
 			<fileset dir="../../foriegn-reader-common/bin" />
 			<fileset dir="../../foriegn-reader-core/bin" />
 			<fileset dir="../../foriegn-reader-MapDB/bin" />
@@ -12,6 +12,6 @@
 	</target>
 
 	<target name="clean" description="clean up">
-		<delete file="../../ForiegnReader/libs/words-processor.jar" />
+		<delete file="../../foreignreader/libs/words-processor.jar" />
 	</target>
 </project>
