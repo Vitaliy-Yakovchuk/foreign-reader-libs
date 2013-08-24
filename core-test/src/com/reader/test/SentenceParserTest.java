@@ -70,9 +70,10 @@ public class SentenceParserTest {
 		book.scanForSentences(new SentenceParserCallback() {
 
 			@Override
-			public void found(Sentence sentence) {
+			public boolean found(Sentence sentence) {
 				assertEquals((int) sentencesSection.remove(0), sentence.section);
 				assertEquals(sentences.remove(0), sentence.text);
+				return true;
 			}
 		});
 		assertEquals(0, sentences.size());

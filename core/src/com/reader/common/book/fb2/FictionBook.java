@@ -218,8 +218,8 @@ public class FictionBook extends AbstractBook {
 		SentenceParserImpl parserImpl = new SentenceParserImpl() {
 
 			@Override
-			public void found(Sentence sentence) {
-				parser.found(sentence);
+			public boolean found(Sentence sentence) {
+				return parser.found(sentence);
 			}
 		};
 

@@ -1,7 +1,9 @@
 package com.reader.mapdb;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +16,8 @@ import org.mapdb.DBMaker;
 import com.reader.common.AbstractDatabase;
 import com.reader.common.ColorConstants;
 import com.reader.common.Word;
+import com.reader.common.book.Sentence;
+import com.reader.common.impl.SimpleTextParser;
 import com.reader.common.persist.WordAttributes;
 
 public class MapDBDatabase extends AbstractDatabase {
@@ -25,9 +29,13 @@ public class MapDBDatabase extends AbstractDatabase {
 	private ConcurrentNavigableMap<String, Date> wordsDated;
 
 	private ConcurrentNavigableMap<String, Date> wordsKnowDated;
+	private WordDBImpl wordDB;
 
 	public MapDBDatabase(File dbFile) {
 		this.file = dbFile;
+
+		wordDB = new WordDBImpl(new File(dbFile.getParentFile(), "words"));
+
 		db = DBMaker.newFileDB(dbFile).make();
 		wordsMap = db.getTreeMap("words");
 		wordsDated = db.getTreeMap("dates");
@@ -104,6 +112,45 @@ public class MapDBDatabase extends AbstractDatabase {
 
 	public DB getDB() {
 		return db;
+	}
+
+	@Override
+	public List<Sentence> getSentences(String word) {
+		try {
+			return wordDB.getSentences(word);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return Collections.emptyList();
+		}
+	}
+
+	@Override
+	public void addSentence(String text, String bookId, int section,
+			int position) {
+
+		final Sentence sentence = new Sentence();
+		sentence.text = text;
+		sentence.section = section;
+		sentence.bookId = bookId;
+
+		SimpleTextParser parser = new SimpleTextParser() {
+
+			@Override
+			public void processWord(char[] text, int start, int length) {
+				String word = new String(text, start, length).toLowerCase();
+
+				WordAttributes wa = getA(word);
+				if (wa != null && wa.getColor().equals(ColorConstants.YELLOW))
+					try {
+						wordDB.addSentence(word, sentence);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+			}
+
+		};
+
+		parser.parse(text.toCharArray());
 	}
 
 }

@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses(value = { TextSourceTest.class, DatabaseSpeedTest.class,
-		SentenceParserTest.class })
+		SentenceParserTest.class, WordDBImplTest.class })
 public class ReaderTests {
 
 }

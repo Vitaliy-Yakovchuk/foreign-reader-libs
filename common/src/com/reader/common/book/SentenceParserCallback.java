@@ -2,6 +2,12 @@ package com.reader.common.book;
 
 public interface SentenceParserCallback {
 
-	public void found(Sentence sentence);
+	/**
+	 * If return <code>false</code> stop scanning
+	 * @param sentence
+	 * @return
+	 */
+	
+	public boolean found(Sentence sentence);
 
 }

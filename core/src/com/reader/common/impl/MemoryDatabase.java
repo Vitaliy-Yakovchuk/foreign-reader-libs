@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.reader.common.AbstractDatabase;
 import com.reader.common.Word;
+import com.reader.common.book.Sentence;
 import com.reader.common.persist.WordAttributes;
 
 public class MemoryDatabase extends AbstractDatabase {
@@ -77,6 +78,17 @@ public class MemoryDatabase extends AbstractDatabase {
 	@Override
 	public Word toWord(String word) {
 		throw new RuntimeException("Method loadWords is not supperted");
+	}
+
+	@Override
+	public List<Sentence> getSentences(String word) {
+		throw new RuntimeException("Method loadWords is not supperted");
+	}
+
+	@Override
+	public void addSentence(String text, String bookId, int section,
+			int position) {
+		throw new RuntimeException("Method loadWords is not supperted");		
 	}
 
 }

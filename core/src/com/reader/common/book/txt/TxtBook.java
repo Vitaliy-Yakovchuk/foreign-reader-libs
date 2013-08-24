@@ -85,8 +85,8 @@ public class TxtBook extends AbstractBook {
 		SentenceParserImpl impl = new SentenceParserImpl() {
 
 			@Override
-			public void found(Sentence sentence) {
-				parser.found(sentence);
+			public boolean found(Sentence sentence) {
+				return parser.found(sentence);
 			}
 		};
 

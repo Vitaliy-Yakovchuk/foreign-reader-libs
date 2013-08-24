@@ -2,6 +2,7 @@ package com.reader.common;
 
 import java.util.List;
 
+import com.reader.common.book.Sentence;
 import com.reader.common.persist.WordAttributes;
 
 /**
@@ -30,7 +31,11 @@ public interface Database {
 	public void updateWords(String[] words, WordAttributes attributes);
 
 	public List<Word> loadWords(String color);
-	
+
 	public Word toWord(String word);
+
+	public void addSentence(String text, String bookId, int section, int position);
+
+	public List<Sentence> getSentences(String word);
 
 }
