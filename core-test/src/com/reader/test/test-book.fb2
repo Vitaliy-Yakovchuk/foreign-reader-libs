@@ -1,0 +1,35 @@
+<body>
+
+	<section>
+		<title>
+			<p>Section 1</p>
+		</title><p>
+		Text of section 1, this is not "very" long text of section 1. And this
+		is small text of section 1.
+</p>
+	</section>
+
+	<section>
+		<title>
+			<p>Section 2</p>
+		</title><p>
+		Text of section 2. This is not very long text of section 2. This is
+		very very very very
+		very very very very very very very very very very
+		very very very very very
+		very very very very very very very very very
+		very very very very very very very very very very very very very very
+		very
+		very very very
+		very very very very very very very very very very
+		very very very very very
+		very very very very very
+		very very very very
+		very very very very very very very very
+		long text of section 2. Small
+		sentence of section
+		2.
+section 2 end</p>
+	</section>
+
+</body>

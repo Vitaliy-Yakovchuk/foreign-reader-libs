@@ -1,5 +1,6 @@
 package com.reader.common.book;
 
-public abstract class AbstractBook implements Book{
+public abstract class AbstractBook implements Book {
 
+	
 }

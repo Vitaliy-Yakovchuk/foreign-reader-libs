@@ -10,6 +10,9 @@ import org.mozilla.universalchardet.UniversalDetector;
 import com.reader.common.book.AbstractBook;
 import com.reader.common.book.Section;
 import com.reader.common.book.SectionMetadata;
+import com.reader.common.book.Sentence;
+import com.reader.common.book.SentenceParserCallback;
+import com.reader.common.impl.SentenceParserImpl;
 
 public class TxtBook extends AbstractBook {
 
@@ -74,6 +77,55 @@ public class TxtBook extends AbstractBook {
 		fis.close();
 
 		return section;
+	}
+
+	@Override
+	public void scanForSentences(final SentenceParserCallback parser)
+			throws Exception {
+		SentenceParserImpl impl = new SentenceParserImpl() {
+
+			@Override
+			public void found(Sentence sentence) {
+				parser.found(sentence);
+			}
+		};
+
+		byte[] buf = new byte[4096];
+		java.io.FileInputStream fis = new java.io.FileInputStream(file);
+
+		UniversalDetector detector = new UniversalDetector(null);
+		int nread;
+		while ((nread = fis.read(buf)) > 0 && !detector.isDone()) {
+			detector.handleData(buf, 0, nread);
+		}
+		detector.dataEnd();
+		String encoding = detector.getDetectedCharset();
+
+		detector.reset();
+
+		fis.close();
+		fis = new java.io.FileInputStream(file);
+
+		InputStreamReader reader;
+
+		if (encoding != null) {
+			reader = new InputStreamReader(fis, encoding);
+		} else
+			reader = new InputStreamReader(fis);
+
+		int ch;
+
+		StringBuilder sb = new StringBuilder();
+
+		while ((ch = reader.read()) > 0) {
+
+			sb.append((char) ch);
+		}
+		if (sb.length() > 0)
+			impl.addSenteceText(sb.toString());
+
+		fis.close();
+
 	}
 
 }

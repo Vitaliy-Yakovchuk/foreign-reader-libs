@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses(value = { TextSourceTest.class, DatabaseSpeedTest.class })
+@SuiteClasses(value = { TextSourceTest.class, DatabaseSpeedTest.class,
+		SentenceParserTest.class })
 public class ReaderTests {
 
 }

@@ -17,6 +17,9 @@ import net.htmlparser.jericho.Tag;
 import com.reader.common.book.AbstractBook;
 import com.reader.common.book.Section;
 import com.reader.common.book.SectionMetadata;
+import com.reader.common.book.Sentence;
+import com.reader.common.book.SentenceParserCallback;
+import com.reader.common.impl.SentenceParserImpl;
 
 public class FictionBook extends AbstractBook {
 
@@ -206,5 +209,108 @@ public class FictionBook extends AbstractBook {
 			}
 		}
 
+	}
+
+	@Override
+	public void scanForSentences(final SentenceParserCallback parser)
+			throws Exception {
+		StreamedSource source = new StreamedSource(new FileInputStream(file));
+		SentenceParserImpl parserImpl = new SentenceParserImpl() {
+
+			@Override
+			public void found(Sentence sentence) {
+				parser.found(sentence);
+			}
+		};
+
+		try {
+			readForSentences(source, parserImpl);
+		} catch (Exception exception) {
+			throw exception;
+		} finally {
+			source.close();
+		}
+	}
+
+	private void readForSentences(StreamedSource source,
+			SentenceParserImpl parserImpl) {
+		int index = 0;
+		Iterator<Segment> i = source.iterator();
+		while (i.hasNext()) {
+			Segment segment = i.next();
+			if (segment instanceof StartTag) {
+				Tag tag = (Tag) segment;
+				if (tag.getName().equals("body")) {
+					while (i.hasNext()) {
+						segment = i.next();
+						if (segment instanceof StartTag) {
+							tag = (Tag) segment;
+							if (tag.getName().equals("section")) {
+								while (i.hasNext()) {
+									segment = i.next();
+									if (segment instanceof StartTag) {
+										tag = (Tag) segment;
+										if (tag.getName().equals("title")) {
+											StringBuilder title = new StringBuilder();
+											while (i.hasNext()) {
+												segment = i.next();
+												if (segment instanceof Tag) {
+													if (((Tag) segment)
+															.getName().equals(
+																	"title"))
+														break;
+												} else if (segment instanceof CharacterReference) {
+													CharacterReference characterReference = (CharacterReference) segment;
+													try {
+														characterReference
+																.appendCharTo(title);
+													} catch (IOException e) {
+														e.printStackTrace();
+													}
+												} else {
+													title.append(segment);
+												}
+											}											
+										} else if (tag.getName().equals("p")) {
+
+											StringBuilder p = new StringBuilder();
+											while (i.hasNext()) {
+												segment = i.next();
+												if (segment instanceof Tag) {
+													if (((Tag) segment)
+															.getName().equals(
+																	"p"))
+														break;
+												} else if (segment instanceof CharacterReference) {
+													CharacterReference characterReference = (CharacterReference) segment;
+													try {
+														characterReference
+																.appendCharTo(p);
+													} catch (IOException e) {
+														e.printStackTrace();
+													}
+												} else {
+													p.append(segment);
+												}
+											}
+											parserImpl.addSenteceText(p.toString());											
+										} else if (tag.getName().equals(
+												"section"))
+											break;
+									} else if (segment instanceof EndTag) {
+										if (((Tag) segment).getName().equals(
+												"section"))
+											break;
+									}
+								}
+								index++;
+								parserImpl.setSection(index);
+							}
+						}
+					}
+					break;
+				}
+			}
+		}
 	}
 }
