@@ -4,11 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -20,10 +23,15 @@ import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.reader.common.ColorConstants;
+import com.reader.common.Database;
+import com.reader.common.ObjectsFactory;
 import com.reader.common.book.Book;
 import com.reader.common.book.Section;
 import com.reader.common.book.SectionMetadata;
 import com.reader.common.book.BookLoader;
+import com.reader.common.book.Sentence;
+import com.reader.common.book.SentenceParserCallback;
 
 public class MainFrame extends JFrame {
 
@@ -62,7 +70,7 @@ public class MainFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = -498112595603179774L;
 
-	public static final String path = "D:/Ramus Work/workspace";
+	public static final String path = "/home/zdd/tmp";
 
 	private JTextPane htmlView;
 
@@ -88,6 +96,38 @@ public class MainFrame extends JFrame {
 		htmlView = new JTextPane();
 		htmlView.setContentType("text/html;");
 		book.add(new JScrollPane(htmlView), BorderLayout.CENTER);
+		JButton b = new JButton("Scan");
+
+		ObjectsFactory.storageFile = new File("/home/zdd/tmp/1.db");
+
+		ObjectsFactory.createSimpleSource("").markColor("alternating", ColorConstants.YELLOW);
+		ObjectsFactory.createSimpleSource("").markColor("found", ColorConstants.YELLOW);
+
+		b.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					Book book = BookLoader
+							.loadBook(new File(
+									"/home/zdd/tmp/Doyle_Arthur__The_Adventures_of_Sherlock_Holmes.fb2"));
+					book.scanForSentences(new SentenceParserCallback() {
+
+						Database database = ObjectsFactory.getDefaultDatabase();
+
+						@Override
+						public boolean found(Sentence sentence) {
+							database.addSentence(sentence.text, "n",
+									sentence.section, -1);
+							return false;
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		base.add(b, BorderLayout.NORTH);
 	}
 
 	private Component createSections() {

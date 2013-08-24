@@ -16,6 +16,7 @@ public class MapDBBooksDatabase extends AbstractBooksDatabase {
 
 	private DB db;
 
+
 	public MapDBBooksDatabase(DB db) {
 		this.db = db;
 		books = db.getTreeMap("books");
@@ -47,5 +48,5 @@ public class MapDBBooksDatabase extends AbstractBooksDatabase {
 	public BookMetadata getBook(String fileName) {
 		return books.get(fileName);
 	}
-
+	
 }
