@@ -26,6 +26,10 @@ public class WordDBImpl {
 		final boolean[] added = new boolean[] { true };
 		File file = getWordFile(word);
 		if (file.exists()) {
+
+			if (file.length() > 40000)
+				return false;
+
 			scan(file, new SentenceParserCallback() {
 
 				@Override

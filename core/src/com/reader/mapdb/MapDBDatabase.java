@@ -34,7 +34,11 @@ public class MapDBDatabase extends AbstractDatabase {
 	public MapDBDatabase(File dbFile) {
 		this.file = dbFile;
 
-		wordDB = new WordDBImpl(new File(dbFile.getParentFile(), "words"));
+		File dir = dbFile.getParentFile();
+
+		dir.mkdirs();
+
+		wordDB = new WordDBImpl(new File(dir, "words"));
 
 		db = DBMaker.newFileDB(dbFile).make();
 		wordsMap = db.getTreeMap("words");
