@@ -38,4 +38,10 @@ public interface Database {
 
 	public List<Sentence> getSentences(String word);
 
+	/**
+	 * 0 - known words,
+	 * 1 - unknown words
+	 * @return
+	 */
+	public int[] getWordsCount();
 }

@@ -29,6 +29,7 @@ public class MapDBDatabase extends AbstractDatabase {
 	private ConcurrentNavigableMap<String, Date> wordsDated;
 
 	private ConcurrentNavigableMap<String, Date> wordsKnowDated;
+
 	private WordDBImpl wordDB;
 
 	public MapDBDatabase(File dbFile) {
@@ -52,7 +53,7 @@ public class MapDBDatabase extends AbstractDatabase {
 		wordsDated.put(word, new Date());
 		if (wordAttributes.getColor().equals(ColorConstants.WHITE)) {
 			WordAttributes wa = getA(word);
-			if (wa != null && wa.getColor().equals(ColorConstants.BLUE))
+			if (wa != null && wa.getColor().equals(ColorConstants.YELLOW))
 				wordsKnowDated.put(word, new Date());
 		}
 	}
@@ -155,6 +156,30 @@ public class MapDBDatabase extends AbstractDatabase {
 		};
 
 		parser.parse(text.toCharArray());
+	}
+
+	@Override
+	public int[] getWordsCount() {
+		int[] res = new int[2];
+		WordAttributes attr = new WordAttributes();
+		attr.setColor(ColorConstants.WHITE);
+		byte[] wt = bytes(attr);
+		attr.setColor(ColorConstants.YELLOW);
+		byte[] yl = bytes(attr);
+		for (Entry<String, byte[]> entry : wordsMap.entrySet()) {
+			byte[] bs2 = entry.getValue();
+			wt[wt.length - 1] = bs2[wt.length - 1];
+			wt[wt.length - 2] = bs2[wt.length - 2];
+			if (Arrays.equals(wt, bs2)) {
+				res[0]++;
+			} else {
+				yl[wt.length - 1] = bs2[wt.length - 1];
+				yl[wt.length - 2] = bs2[wt.length - 2];
+				if (Arrays.equals(yl, bs2))
+					res[1]++;
+			}
+		}
+		return res;
 	}
 
 }
