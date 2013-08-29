@@ -161,7 +161,7 @@ public class FictionBook extends AbstractBook {
 														title.append(segment);
 													}
 												}
-												String t = title.toString();
+												String t = title.toString().replace('’', '\'');
 												section.setTitle(t);
 												section.getParagraphs().add(t);
 											} else if (tag.getName()
@@ -188,7 +188,7 @@ public class FictionBook extends AbstractBook {
 													}
 												}
 												section.getParagraphs().add(
-														p.toString());
+														p.toString().replace('’', '\''));
 
 											} else if (tag.getName().equals(
 													"section"))
