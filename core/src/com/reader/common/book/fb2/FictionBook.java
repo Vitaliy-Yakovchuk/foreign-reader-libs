@@ -74,6 +74,7 @@ public class FictionBook extends AbstractBook {
 		metadata.setLevel(level);
 		metadata.setTitle("");
 		res.add(metadata);
+		String p = "";
 		while (i.hasNext()) {
 			segment = i.next();
 			if (segment instanceof StartTag) {
@@ -99,12 +100,33 @@ public class FictionBook extends AbstractBook {
 					metadata.setTitle(title.toString());
 				} else if (tag.getName().equals("section")) {
 					loadSection(res, i, level + 1);
+				} else if (tag.getName().equals("p")&&p.length()==0) {
+					StringBuilder title = new StringBuilder();
+					while (i.hasNext()) {
+						segment = i.next();
+						if (segment instanceof Tag) {
+							if (((Tag) segment).getName().equals("p"))
+								break;
+						} else if (segment instanceof CharacterReference) {
+							CharacterReference characterReference = (CharacterReference) segment;
+							try {
+								characterReference.appendCharTo(title);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else {
+							title.append(segment);
+						}
+					}
+					p = title.toString();
 				}
 			} else if (segment instanceof EndTag) {
 				if (((Tag) segment).getName().equals("section"))
 					break;
 			}
 		}
+		if (metadata.getTitle().trim().length()==0)
+			metadata.setTitle(p);
 	}
 
 	@Override
@@ -161,7 +183,8 @@ public class FictionBook extends AbstractBook {
 														title.append(segment);
 													}
 												}
-												String t = title.toString().replace('’', '\'');
+												String t = title.toString()
+														.replace('’', '\'');
 												section.setTitle(t);
 												section.getParagraphs().add(t);
 											} else if (tag.getName()
@@ -188,7 +211,8 @@ public class FictionBook extends AbstractBook {
 													}
 												}
 												section.getParagraphs().add(
-														p.toString().replace('’', '\''));
+														p.toString().replace(
+																'’', '\''));
 
 											} else if (tag.getName().equals(
 													"section"))
@@ -270,7 +294,7 @@ public class FictionBook extends AbstractBook {
 												} else {
 													title.append(segment);
 												}
-											}											
+											}
 										} else if (tag.getName().equals("p")) {
 
 											StringBuilder p = new StringBuilder();
@@ -293,7 +317,8 @@ public class FictionBook extends AbstractBook {
 													p.append(segment);
 												}
 											}
-											parserImpl.addSenteceText(p.toString());											
+											parserImpl.addSenteceText(p
+													.toString());
 										} else if (tag.getName().equals(
 												"section"))
 											break;

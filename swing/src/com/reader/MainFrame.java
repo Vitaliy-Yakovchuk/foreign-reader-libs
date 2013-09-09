@@ -70,7 +70,7 @@ public class MainFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = -498112595603179774L;
 
-	public static final String path = "/home/zdd/tmp";
+	public static final String path = "..";
 
 	private JTextPane htmlView;
 
