@@ -1,6 +1,7 @@
 package com.reader.common.pages;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class Page implements Serializable {
 
@@ -9,20 +10,30 @@ public class Page implements Serializable {
 	 */
 	private static final long serialVersionUID = -7445349484170945159L;
 
+	private int maxLine = 0;
+
+	private int ignoreLineCount;
+
 	public Page(char[] text, int maxLineCount) {
 		this.text = text;
-		startLines = new int[maxLineCount];
-		lengthLines = new int[maxLineCount];
-		end = new boolean[maxLineCount];
+		if (maxLineCount == Integer.MAX_VALUE) {
+			startLines = new int[20];
+			lengthLines = new int[20];
+			end = new boolean[20];
+		} else {
+			startLines = new int[maxLineCount];
+			lengthLines = new int[maxLineCount];
+			end = new boolean[maxLineCount];
+		}
 	}
 
 	public transient char[] text;
 
-	public final int[] startLines;
+	public int[] startLines;
 
-	public final int[] lengthLines;
+	public int[] lengthLines;
 
-	public final boolean[] end;
+	public boolean[] end;
 
 	public String getText() {
 		int s = startLines[0];
@@ -37,6 +48,27 @@ public class Page implements Serializable {
 
 	public int getMaxLineCount() {
 		return startLines.length;
+	}
+
+	public void updateMaxLine(int line) {
+		if (line >= startLines.length) {
+			startLines = Arrays.copyOf(startLines, line + 20);
+			lengthLines = Arrays.copyOf(lengthLines, line + 20);
+			end = Arrays.copyOf(end, line + 20);
+		}
+		maxLine = line;
+	}
+
+	public int getMaxLine() {
+		return maxLine;
+	}
+
+	public int getIgnoreLineCount() {
+		return ignoreLineCount;
+	}
+
+	public void setIgnoreLineCount(int ignoreLineCount) {
+		this.ignoreLineCount = ignoreLineCount;
 	}
 
 }

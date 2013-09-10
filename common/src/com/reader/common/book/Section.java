@@ -14,6 +14,8 @@ public class Section implements Serializable {
 	private List<String> paragraphs = new LinkedList<String>();
 
 	private String title;
+	
+	private int ignoreParagraphCount;
 
 	public List<String> getParagraphs() {
 		return paragraphs;
@@ -25,5 +27,13 @@ public class Section implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public int getIgnoreParagraphCount() {
+		return ignoreParagraphCount;
+	}
+
+	public void setIgnoreParagraphCount(int ignoreParagraphCount) {
+		this.ignoreParagraphCount = ignoreParagraphCount;
 	}
 }

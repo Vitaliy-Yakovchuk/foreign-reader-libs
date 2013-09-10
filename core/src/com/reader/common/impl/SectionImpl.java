@@ -53,6 +53,9 @@ public class SectionImpl extends AbstractSection implements Serializable {
 
 		final Iterator<String> paragraphs = section.getParagraphs().iterator();
 
+		final int[] ignoreParagraphCount = new int[] { section
+				.getIgnoreParagraphCount() };
+
 		class SimpleTextWithSymbolsParserA extends SimpleTextWithSymbolsParser {
 			private int line;
 
@@ -98,8 +101,10 @@ public class SectionImpl extends AbstractSection implements Serializable {
 			}
 
 			private boolean paragraphChanged(char[] txt, int start, int length) {
-				if (p == null)
+				if (p == null) {
 					p = paragraphs.next();
+					ignoreParagraphCount[0]--;
+				}
 
 				boolean res = false;
 
@@ -107,6 +112,7 @@ public class SectionImpl extends AbstractSection implements Serializable {
 					if (pIndex >= p.length()) {
 						res = true;
 						p = paragraphs.next();
+						ignoreParagraphCount[0]--;
 						if (p.length() == 0)
 							break;
 						pIndex = 0;
@@ -129,6 +135,11 @@ public class SectionImpl extends AbstractSection implements Serializable {
 					pages.add(page);
 					line = 0;
 				}
+
+				page.updateMaxLine(line);
+
+				if (ignoreParagraphCount[0] >= 0)
+					page.setIgnoreLineCount(line + 1);
 
 				page.startLines[line] = st;
 				page.lengthLines[line] = len;

@@ -84,6 +84,10 @@ public class MapDBDatabase extends AbstractDatabase {
 	@Override
 	public void commit() {
 		db.commit();
+		if (dbStatNeedCommit) {
+			dbStat.commit();
+			dbStatNeedCommit = false;
+		}
 	}
 
 	@Override
@@ -197,8 +201,11 @@ public class MapDBDatabase extends AbstractDatabase {
 	}
 
 	public void setInSentenceCount(String word, int count) {
-		wordsStat.put(word, count);
-		dbStat.commit();
+		Integer wc = wordsStat.get(word);
+		if (wc == null || wc.intValue() != count) {
+			wordsStat.put(word, count);
+			dbStatNeedCommit = true;
+		}
 	}
 
 	private int getInSentenceCount(String word) {

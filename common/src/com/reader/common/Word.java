@@ -53,7 +53,7 @@ public class Word implements Serializable, Comparable<Word> {
 
 	@Override
 	public String toString() {
-		return getText();
+		return getText() + " (" + getInSentenceCount() + ")";
 	}
 
 	public int getInSentenceCount() {
