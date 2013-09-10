@@ -16,14 +16,18 @@ public class WordDBImpl {
 
 	private final File dic;
 
-	public WordDBImpl(File dic) {
+	private final MapDBDatabase database;
+
+	public WordDBImpl(File dic, MapDBDatabase database) {
 		this.dic = dic;
+		this.database = database;
 		dic.mkdirs();
 	}
 
 	public boolean addSentence(String word, final Sentence sentence)
 			throws IOException {
 		final boolean[] added = new boolean[] { true };
+		final int[] count = new int[] { 0 };
 		File file = getWordFile(word);
 		if (file.exists()) {
 
@@ -36,8 +40,8 @@ public class WordDBImpl {
 				public boolean found(Sentence sentence1) {
 					if (sentence.equals(sentence1)) {
 						added[0] = false;
-						return false;
 					}
+					count[0]++;
 					return true;
 				}
 			});
@@ -55,7 +59,10 @@ public class WordDBImpl {
 			dos.writeInt(sentence.section);
 			dos.writeInt(-1);// reserved for position
 			dos.close();
+			count[0]++;
 		}
+
+		database.setInSentenceCount(word, count[0]);
 
 		return added[0];
 	}
@@ -107,6 +114,23 @@ public class WordDBImpl {
 
 	public File getDic() {
 		return dic;
+	}
+
+	public int getInSentenceCount(String word) throws IOException {
+		final int[] count = new int[] { 0 };
+		File file = getWordFile(word);
+		if (file.exists()) {
+
+			scan(file, new SentenceParserCallback() {
+
+				@Override
+				public boolean found(Sentence sentence1) {
+					count[0]++;
+					return true;
+				}
+			});
+		}
+		return count[0];
 	}
 
 }

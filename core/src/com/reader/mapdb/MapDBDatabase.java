@@ -24,13 +24,18 @@ public class MapDBDatabase extends AbstractDatabase {
 
 	private final File file;
 	private DB db;
+	private DB dbStat;
 	private ConcurrentNavigableMap<String, byte[]> wordsMap;
 
 	private ConcurrentNavigableMap<String, Date> wordsDated;
 
 	private ConcurrentNavigableMap<String, Date> wordsKnowDated;
 
+	private ConcurrentNavigableMap<String, Integer> wordsStat;
+
 	private WordDBImpl wordDB;
+
+	private boolean dbStatNeedCommit;
 
 	public MapDBDatabase(File dbFile) {
 		this.file = dbFile;
@@ -39,12 +44,14 @@ public class MapDBDatabase extends AbstractDatabase {
 
 		dir.mkdirs();
 
-		wordDB = new WordDBImpl(new File(dir, "words"));
+		wordDB = new WordDBImpl(new File(dir, "words"), this);
 
 		db = DBMaker.newFileDB(dbFile).make();
+		dbStat = DBMaker.newFileDB(new File(dir, "wordsstat")).make();
 		wordsMap = db.getTreeMap("words");
 		wordsDated = db.getTreeMap("dates");
 		wordsKnowDated = db.getTreeMap("know_dates");
+		wordsStat = dbStat.getTreeMap("wordsstat");
 	}
 
 	@Override
@@ -70,6 +77,7 @@ public class MapDBDatabase extends AbstractDatabase {
 
 	public void closeAndRemove() {
 		db.close();
+		dbStat.close();
 		file.delete();
 	}
 
@@ -87,6 +95,7 @@ public class MapDBDatabase extends AbstractDatabase {
 	public List<Word> loadWords(String color) {
 		List<Word> l = new LinkedList<Word>();
 		WordAttributes attr = new WordAttributes();
+		dbStatNeedCommit = false;
 		attr.setColor(color);
 		byte[] bs = bytes(attr);
 		for (Entry<String, byte[]> entry : wordsMap.entrySet()) {
@@ -99,8 +108,13 @@ public class MapDBDatabase extends AbstractDatabase {
 				word.setText(text);
 				word.setColor(color);
 				word.setDate(wordsDated.get(text));
+				word.setInSentenceCount(getInSentenceCount(text));
 				l.add(word);
 			}
+		}
+		if (dbStatNeedCommit) {
+			dbStatNeedCommit = false;
+			dbStat.commit();
 		}
 		return l;
 	}
@@ -180,6 +194,26 @@ public class MapDBDatabase extends AbstractDatabase {
 			}
 		}
 		return res;
+	}
+
+	public void setInSentenceCount(String word, int count) {
+		wordsStat.put(word, count);
+		dbStat.commit();
+	}
+
+	private int getInSentenceCount(String word) {
+		Integer i = wordsStat.get(word);
+		if (i != null)
+			return i;
+		try {
+			i = 0;
+			i = wordDB.getInSentenceCount(word);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		wordsStat.put(word, i);
+		dbStatNeedCommit = true;
+		return i;
 	}
 
 }

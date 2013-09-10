@@ -16,6 +16,8 @@ public class Word implements Serializable, Comparable<Word> {
 
 	private Date date;
 
+	private int inSentenceCount;
+
 	public String getText() {
 		return text;
 	}
@@ -42,12 +44,24 @@ public class Word implements Serializable, Comparable<Word> {
 
 	@Override
 	public int compareTo(Word o) {
-		return o.date.compareTo(date);
+		if (inSentenceCount < o.inSentenceCount)
+			return 1;
+		if (inSentenceCount > o.inSentenceCount)
+			return -1;
+		return 0;
 	}
 
 	@Override
 	public String toString() {
 		return getText();
+	}
+
+	public int getInSentenceCount() {
+		return inSentenceCount;
+	}
+
+	public void setInSentenceCount(int inSentenceCount) {
+		this.inSentenceCount = inSentenceCount;
 	}
 
 }
